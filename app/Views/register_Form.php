@@ -1,5 +1,4 @@
 <?php $page_session = \Config\Services::session();
-   $page_session ->markAsTempdata(['success','error'],2);
 ?>
     <div class="container" >
         <div class="row justify-content-center align-items-center">

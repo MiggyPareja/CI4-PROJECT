@@ -3,17 +3,14 @@
 namespace App\Controllers;
 use \App\Models\RegisterModel;
 
-
 class Register extends BaseController
 {
     public $registerModel;
     public $session;
-    public $email;
     public function __construct()
     {
         $this->registerModel = new RegisterModel();
         $this->session = \Config\Services::session();
-        $this->email = \Config\Services::email();
         helper('form');
     }
     public function index()
