@@ -42,7 +42,7 @@ class Add extends BaseController
                 if($prodData['prod_file'] && $prodData['prod_file']->isValid())
                 {
                     $fileName =$prodData['prod_file']->getName();
-                    $prodData['prod_file']->move(WRITEPATH.'writable\uploads',$fileName);
+                    $prodData['prod_file']->move(WRITEPATH.'uploads',$fileName);
                     $prodData['prod_file'] = $fileName;
                 }
                 if($this->model->save($prodData))
