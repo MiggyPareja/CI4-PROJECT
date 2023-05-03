@@ -3,13 +3,16 @@
   $userData = $session->get();
   ?>
 <div class="d-flex flex-row align-items-center">
-<h5 class="p-3 ">Welcome back, User <?= $userData['username'] ?></h5>
-<a class="btn btn-primary text-decoration-none text-light mr-2" href="<?=base_url('/Add');?>">Add</a>
-<a class="btn btn-primary text-decoration-none text-light" href="<?=base_url('/Add');?>">Import</a>
-<input class="form-control w-25 my-2 ml-2" id="myInput" type="text" placeholder="Search...">
+    <h5 class="p-3 ">Welcome back, User <?= $userData['username'] ?></h5>
+    <a class="btn btn-primary text-decoration-none text-light mr-2" href="<?=base_url('/Add');?>">Add</a>
+    <a class="btn btn-primary text-decoration-none text-light" href="<?=base_url('/Add');?>">Import</a>
+    <form class="form-inline my-2 my-lg-0 ml-auto" action="<?= base_url('/dashboard/search')  ?>" method="get">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search..." aria-label="Search" id="myInput" name="searchTable">
+    </form>
 </div>
+
 <div class="table-responsive">
-    <table class="table table-bordered"  >
+    <table class="table table-bordered">
         <thead class="thead-white">
             <tr>
                 <th class="text-center" scope="col">ID</th>
@@ -22,25 +25,32 @@
                 <th class="text-center" scope="col">Actions</th>
             </tr>
         </thead>
-        <tbody id= "myTable" >
-        <?php if (empty($products)): ?>
-            <p class="ml-3">No results found.</p>
-        <?php endif; ?>
+        <tbody id="myTable">
+            <?php if (empty($products)): ?>
+            <tr>
+                <td colspan="8" class="text-center">No results found.</td>
+            </tr>
+            <?php endif; ?>
             <?php foreach ($products as $product) : ?>
             <tr>
-                <td ><?= $product['id'];?></td>
-                <td><?= $product['prod_name'];?></td>
-                <td><a href=""><?= $product['prod_file']?></a></td>
-                <td><?= $product['prod_desc'];?></td>
-                <td>$<?= $product['prod_price'];?></td>
-                <td><?= $product['created_at'];?></td>
-                <td><?= $product['updated_at'];?></td>
-                <td class="d-flex justify-content-center">
-                    <a href="<?= base_url('/Dashboard/editPage/' . $product['id'])?>"><i class="bi bi-pencil-fill p-2" style="font-size:1.5em; color:green" data-toggle="tooltip" data-placement="top" title="Edit"></i></a>
-                    <a href="<?=base_url('/Dashboard/delete/'.$product['id'])?>" onclick="return confirm('Are you sure you want to delete this product?')" data-toggle="tooltip" data-placement="top" title="Delete"><i class="bi bi-trash" style="font-size:1.5em; color:red"></i></a>
+                <td><?= $product['id'];?></td>
+                <td class="text-wrap"><?= $product['prod_name'];?></td>
+                <td><a href="<?=base_url('dashboard/download/' . $product['prod_file'])  ?>"><?= $product['prod_file']?></a></td>
+                <td class="text-wrap"><?= $product['prod_desc'];?></td>
+                <td class="text-wrap">$<?= $product['prod_price'];?></td>
+                <td class="text-wrap"><?= $product['created_at'];?></td>
+                <td class="text-wrap"><?= $product['updated_at'];?></td>
+                <td class="text-center">
+                    <a href="<?= base_url('/Dashboard/editPage/' . $product['id'])?>" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="Edit"><i class="bi bi-pencil-fill"></i></a>
+                    <a href="<?=base_url('/Dashboard/delete/'.$product['id'])?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this product?')" data-toggle="tooltip" data-placement="top" title="Delete"><i class="bi bi-trash"></i></a>
                 </td>
             </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 </div>
+
+
+
+
+

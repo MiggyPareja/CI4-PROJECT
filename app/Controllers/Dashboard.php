@@ -30,7 +30,6 @@ class Dashboard extends BaseController{
     }
     public function delete($id)
     {
-        $prod = $this->model->find($id);
         if($this->model->delete($id))
         {
             $this->session->setTempdata('successDel','Deleted Succesfully');
@@ -48,19 +47,18 @@ class Dashboard extends BaseController{
     public function editPage($id)
     {
         $data['product'] = $this->model->find($id);
-        $header = view('templates/db_header');
-        $content = view('edit', $data);
-        $footer = view('templates/db_footer');
-        return $header . $content . $footer;
+        return view('templates/db_header')
+         . view('edit', $data)
+          . view('templates/db_footer');
 
     }
     public function update($id)
     {
         $product = $this->model->find($id);
         $rules = [
-            'editName' => 'required|min_length[3]|max_length[35]',
-            'editDescription' => 'required|min_length[3]|max_length[100]',
-            'editPrice' => 'required|numeric'
+            'editName' => 'min_length[3]|max_length[35]',
+            'editDescription' => 'min_length[3]|max_length[100]',
+            'editPrice' => 'numeric'
         ];
 
         if($this->validate($rules))
@@ -70,8 +68,7 @@ class Dashboard extends BaseController{
             $file =$this->request->getFile('editFile');  
             $filename = $product['prod_file'];
 
-            if($file && $file->isValid())
-            {
+           
                 $filename = $file ->getName();
                 $file->move(WRITEPATH.'uploads',$filename);
                 $data= [
@@ -84,18 +81,31 @@ class Dashboard extends BaseController{
                 $this->model->update($id,$data);
                 $this->session->setTempdata('successEdit', 'Successfully Edited Product!');
                 return redirect()-> to(current_url());
-            }else{
-                $this->session->setTempdata('error', 'File is not valid');
-                return redirect()->to(base_url('/dashboard'));
-            }
+            
         }else{
+            
             $vali['validation'] = $this->validator;
         }
         return redirect()-> to(base_url('/dashboard'));
     }
     public function search()
     {
-        
+        $term = $this->request->getGet('searchTable');
+        $data = [
+            'products' =>$this->model->like(['prod_name' =>$term])
+                                    ->orLike(['prod_desc' =>$term])
+                                    ->orLike(['prod_price' =>$term])
+                                    ->findAll()
+        ];
+        return view('templates/db_header')
+            .view('dashboard',$data)
+            .view('templates/db_footer');
+    }
+    public function download($filename)
+    {
+         $path = WRITEPATH . "uploads/" .$filename;
+
+         return $this->response->download($path,null);
     }
 }
 ?>

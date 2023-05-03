@@ -14,7 +14,7 @@ $userData = $page_session->get();
 <form class="" action="<?= base_url('/Add/store')?>" method="post" enctype="multipart/form-data">
         <div class="form-group-sm ">
             <label for="name">Name:</label>
-            <input class="form-control input-sm" type="text" name="name" id="name">
+            <input class="form-control input-sm" type="text" name="name" id="name" >
             
             <span class="text-danger"><small><?= validation_show_error('name'); ?></small></span>
         </div>
