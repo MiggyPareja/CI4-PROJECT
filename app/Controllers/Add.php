@@ -48,6 +48,7 @@ class Add extends BaseController
                 if($this->model->save($prodData))
                 {
                     $this->session->setTempdata('successStore', 'Successfully Added Product!');
+                
                     return redirect()-> to(current_url());
                 }else{
                     return redirect()->to(current_url());

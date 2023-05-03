@@ -12,27 +12,28 @@ $userData = $page_session->get();
                 </div>
             <?php endif; ?>
 <form class="" action="<?= base_url('/Add/store')?>" method="post" enctype="multipart/form-data">
-        <div class="form-group ">
+        <div class="form-group-sm ">
             <label for="name">Name:</label>
-            <input class="form-control" type="text" name="name" id="name">
+            <input class="form-control input-sm" type="text" name="name" id="name">
+            
             <span class="text-danger"><small><?= validation_show_error('name'); ?></small></span>
         </div>
-        <div class="form-group">
+        <div class="form-group-sm">
             <label for="file">File:</label>
             <input class="form-control-file" type="File" name="file" id="file">
         </div>
-        <div class="form-group">
+        <div class="form-group-sm">
             <label  for="desciption">Description:</label>
             <textarea class="form-control" class="align-middle" name="description" id="description" style="resize:none;"></textarea>
             <span class="text-danger"><small><?= validation_show_error('description'); ?></small></span>
         </div>
         
-        <div class="form-group">
+        <div class="form-group-sm">
             <label for="price">Price:</label>
             <input class="form-control" type="number" name="price" id="price">
             <span class="text-danger"><small><?= validation_show_error('price'); ?></small></span>
         </div>
-        <div class="form-group">
+        <div class="form-group-sm">
             <label for="user">User:</label>
             <input class="form-control-plaintext disabled" type="text" name="user" id="user" value="<?php echo $userData['id'];?>" readonly>
         </div>

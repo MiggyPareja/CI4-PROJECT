@@ -2,34 +2,36 @@
 $page_session = \Config\Services::session();
 $userData = $page_session->get();
 ?>
-<?php if ($page_session->getTempdata('successEdit')) : ?>
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <?= $page_session->getTempdata('successEdit');?>
+
+<?php if ($page_session->getTempdata('errorEdit')) : ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <?= $page_session->getTempdata('errorEdit');?>
     </div>
 <?php endif; ?>
-<form action="<?=base_url('/dashboard/update/')?>" method="post" enctype="multipart/form-data">
+<form action="<?= base_url('/dashboard/update/'.$product['id']) ?>" method="post" enctype="multipart/form-data">
+
+<?= csrf_field() ?>
     <div>
         <label for="">Name: </label>
-        <input type="text" name="editName" value="<?= old('name');?>">
-        <span class="text-danger"><small><?= validation_show_error('name'); ?></small></span>
+        <input type="text" name="editName" value="<?= old('editName');?>">
+        <span class="text-danger"><small><?= validation_show_error('editName'); ?></small></span>
     </div>
     <div>
         <label for="">File: </label>
-        <input type="file" name="file">
-        <span class="text-danger"><small><?= validation_show_error('name'); ?></small></span>
+        <input type="file" name="editFile">
     </div>
     <div>
         <label for="">Description: </label>
-        <textarea name="editDescription" id="" cols="" rows="" value="<?= old('description');?>"></textarea>
-        <span class="text-danger"><small><?= validation_show_error('name'); ?></small></span>
+        <textarea name="editDescription" value="<?= old('editDescription');?>"></textarea>
+        <span class="text-danger"><small><?= validation_show_error('editDescription'); ?></small></span>
     </div>
     <div>
         <label for="">Price: </label>
-        <input type="number" name="editPrice" value="<?= old('price');?>">
-        <span class="text-danger"><small><?= validation_show_error('name'); ?></small></span>
+        <input type="number" name="editPrice" value="<?= old('editPrice');?>">
+        <span class="text-danger"><small><?= validation_show_error('editPrice'); ?></small></span>
     </div>
 
-    <button>Edit</button>
+    <button type="submit">Edit</button>
     <button type="reset">Reset</button>
-    <button>Back</button>
+    <button> <a href="<?= base_url('/dashboard') ?>">Back</a></button>
 </form>

@@ -9,7 +9,7 @@ class Dashboard extends BaseController{
     public $session;
     public function __construct()
     {
-        helper(['filesystem']);
+        helper(['form','filesystem','url','security']);
         $this->session = session();
         $this->model = new DashboardModel();
     }
@@ -45,52 +45,57 @@ class Dashboard extends BaseController{
         session_destroy();
         return redirect()->to(base_url('/login'));
     }
-    public function editPage()
+    public function editPage($id)
     {
-        return view('templates/db_header')
-            .view('edit')
-            .view('templates/db_footer');
+        $data['product'] = $this->model->find($id);
+        $header = view('templates/db_header');
+        $content = view('edit', $data);
+        $footer = view('templates/db_footer');
+        return $header . $content . $footer;
+
     }
     public function update($id)
     {
-        $data =[];
-        $data['validation'] = null;
-        if($this->request->getMethod() == 'post')
-        {
-            $prod = $this->model->find($id);
-            $rules = [
-            'name' => 'required|min_length[3]|max_length[35]',
-            'description' => 'required|min_length[3]|max_length[100]',
-            'price' => 'required|numeric'
-            ];
+        $product = $this->model->find($id);
+        $rules = [
+            'editName' => 'required|min_length[3]|max_length[35]',
+            'editDescription' => 'required|min_length[3]|max_length[100]',
+            'editPrice' => 'required|numeric'
+        ];
+
         if($this->validate($rules))
         {
-            $file = $this->request->getFile('file');
-            if($file->isValid())
+            $vali =[];
+            $vali['validation'] = null;
+            $file =$this->request->getFile('editFile');  
+            $filename = $product['prod_file'];
+
+            if($file && $file->isValid())
             {
-                $fileName =$file->getBasename();
-                $file->move(WRITEPATH.'writable\uploads',$fileName);
-                $data = [
-                    'name' => $this->request->getPost('name'),
-                    'file' => $fileName,
-                    'description' =>$this->request->getPost('description'),
-                    'price' => $this->request->getPost('price')
+                $filename = $file ->getName();
+                $file->move(WRITEPATH.'uploads',$filename);
+                $data= [
+                     'prod_name' => $this->request->getVar('editName'),
+                     'prod_file' => $filename,
+                     'prod_desc' => $this->request->getVar('editDescription'),
+                     'prod_price' => $this->request->getVar('editPrice')  
                 ];
-                if($this->model->update($id,$data))
-                {
-                    $this->session->setTempdata('successEdit', 'Successfully Edited Product!');
-                    return redirect()-> to(current_url());
-                }else{
-                    $this->session->setTempdata('errorEdit', 'Update Error');
-                    return redirect()-> to(current_url());
-                }
+
+                $this->model->update($id,$data);
+                $this->session->setTempdata('successEdit', 'Successfully Edited Product!');
+                return redirect()-> to(current_url());
+            }else{
+                $this->session->setTempdata('error', 'File is not valid');
+                return redirect()->to(base_url('/dashboard'));
             }
         }else{
-            $data['validation'] = $this->validator;
+            $vali['validation'] = $this->validator;
         }
-        }
+        return redirect()-> to(base_url('/dashboard'));
+    }
+    public function search()
+    {
         
     }
 }
-
 ?>
