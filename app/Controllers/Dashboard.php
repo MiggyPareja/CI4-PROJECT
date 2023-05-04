@@ -33,7 +33,6 @@ class Dashboard extends BaseController{
     {
         if($this->model->delete($id))
         {
-        
             $this->session->setTempdata('success','Deleted Succesfully');
             return redirect()->to(previous_url());
         }else{
