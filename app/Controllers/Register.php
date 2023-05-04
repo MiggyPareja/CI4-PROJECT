@@ -23,7 +23,7 @@ class Register extends BaseController
                 'username' => 'required|min_length[3]|max_length[20]',
                 'email' => 'required|valid_email|is_unique[users.email]',
                 'password' => 'required|min_length[6]|max_length[16]',
-                'cpassword' => 'required|matches[password]',
+                'cpassword' => 'matches[password]',
                 'mobile' => 'required|exact_length[10]|numeric',
             ];
 

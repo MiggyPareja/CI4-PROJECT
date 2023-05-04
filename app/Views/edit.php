@@ -11,6 +11,7 @@ $userData = $page_session->get();
 <div class="container">
   <div class="row justify-content-center ">
     <div class="col-sm-8 col-md-6 col-lg-4 border border-dark rounded">
+      <h1>Edit Product</h1>
       <form action="<?= base_url('/dashboard/update/'.$product['id']) ?>" method="post" enctype="multipart/form-data">
         <?= csrf_field() ?>
         <div class="form-group">

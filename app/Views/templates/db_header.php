@@ -17,21 +17,25 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+  
   <a class="navbar-brand text-decoration-none text-white"><i class="bi bi-journal-bookmark-fill"></i> Product Handler</a>
+  
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-    <ul class="navbar-nav">
+    <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
           <a href="<?= base_url('/Dashboard')?>" class="nav-link" >Home <span class="sr-only">(current)</span></a>
         </li>
-        <div>
     </ul>
   </div>
-  <li class="nav-item dropleft navbar-text">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  
+  <ul class="navbar-nav">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <?=$userData['username']?>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item text-dark" href="<?=base_url('dashboard/logout')?>">Logout</a>
-        </div>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item text-dark" href="<?=base_url('dashboard/logout')?>">Logout</a>
+      </div>
     </li>
-</nav>
+  </ul>
+</nav> 

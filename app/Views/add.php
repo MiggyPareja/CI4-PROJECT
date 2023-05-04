@@ -33,7 +33,7 @@ $userData = $page_session->get();
             <input class="form-control" type="number" name="price" id="price">
             <span class="text-danger"><small><?= validation_show_error('price'); ?></small></span>
         </div>
-        <div class="form-group-sm">
+        <div class="form-group-sm" hidden>
             <label for="user">User:</label>
             <input class="form-control-plaintext disabled" type="text" name="user" id="user" value="<?php echo $userData['id'];?>" readonly>
         </div>
