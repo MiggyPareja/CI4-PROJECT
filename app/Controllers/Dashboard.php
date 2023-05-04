@@ -85,11 +85,10 @@ class Dashboard extends BaseController{
         return redirect()->to(current_url());
     } else {
         $vali['validation'] = $this->validator;
-        return redirect()->withInput()->to(previous_url());
-    }
+        return redirect()->to(previous_url());
+        }
     
     }
-
     public function search()
     {
         $term = $this->request->getGet('searchTable');
@@ -101,7 +100,6 @@ class Dashboard extends BaseController{
         ];
         
         session()->setTempdata('success', 'Data Indexes Successfully');
-        
         return view('templates/db_header')
             .view('dashboard',$data)
             .view('templates/db_footer');
@@ -170,7 +168,7 @@ public function clear()
     $this->model->truncate();
     delete_files('C:\xampp\htdocs\ci4\writable\uploads');
     session()->setTempdata('success', 'Data cleared successfully.');
-    return redirect()->back(); 
+    return redirect()->to(base_url('/dashboard')); 
 }
 
 }
