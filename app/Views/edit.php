@@ -3,12 +3,12 @@ $page_session = \Config\Services::session();
 $userData = $page_session->get();
 ?>
 
-<?php if ($page_session->getTempdata('errorEdit')) : ?>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <?= $page_session->getTempdata('errorEdit');?>
+<?php if ($page_session->getTempdata('successEdit')) : ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <?= $page_session->getTempdata('successEdit');?>
     </div>
 <?php endif; ?>
-<div class="container">
+<div class="container my-5">
   <div class="row justify-content-center ">
     <div class="col-sm-8 col-md-6 col-lg-4 border border-dark rounded">
       <h1>Edit Product</h1>

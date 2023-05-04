@@ -1,8 +1,8 @@
 <?php 
 namespace App\Controllers;
 use App\Models\DashboardModel;
-use CodeIgniter\Database\Query;
-use CodeIgniter\Exceptions\AlertError;
+
+use function PHPUnit\Framework\isEmpty;
 
 class Dashboard extends BaseController{
     public $table;
@@ -33,7 +33,8 @@ class Dashboard extends BaseController{
     {
         if($this->model->delete($id))
         {
-            $this->session->setTempdata('successDel','Deleted Succesfully');
+        
+            $this->session->setTempdata('success','Deleted Succesfully');
             return redirect()->to(previous_url());
         }else{
             return redirect()->to(previous_url());
@@ -55,14 +56,15 @@ class Dashboard extends BaseController{
     public function update($id)
     {
         $product = $this->model->find($id);
+        $vali['validation'] = null;
         $rules = [
-            'editName' => 'min_length[3]|max_length[35]',
-            'editDescription' => 'min_length[3]|max_length[100]',
-            'editPrice' => 'numeric'
+            'editName' => 'required|min_length[3]|max_length[35]',
+            'editDescription' => 'required|min_length[3]|max_length[100]',
+            'editPrice' => 'required|numeric'
         ];
 
     if ($this->validate($rules)) {
-        $vali['validation'] = null;
+        
         $file = $this->request->getFile('editFile');
         $filename = $product['prod_file'];
 
@@ -79,14 +81,14 @@ class Dashboard extends BaseController{
         ];
 
         $this->model->update($id, $data);
-        $this->session->setTempdata('successEdit', 'Successfully Edited Product!');
+        $this->session->setTempdata('success', 'Successfully Edited Product!');
         return redirect()->to(current_url());
     } else {
         $vali['validation'] = $this->validator;
+        return redirect()->withInput()->to(previous_url());
     }
-
-    return redirect()->to(base_url('/dashboard'));
-}
+    
+    }
 
     public function search()
     {
@@ -97,6 +99,9 @@ class Dashboard extends BaseController{
                     ->orLike(['prod_price' =>$term])
                     ->findAll()
         ];
+        
+        session()->setTempdata('success', 'Data Indexes Successfully');
+        
         return view('templates/db_header')
             .view('dashboard',$data)
             .view('templates/db_footer');
@@ -107,47 +112,66 @@ class Dashboard extends BaseController{
 
          return $this->response->download($path,null);
     }
-    public function import(){
-        $getFile =  $this->request->getFile('importFile');
-
-        if($getFile->isValid() && !$getFile->hasMoved())
-        {
-            $handle = fopen($getFile->getTempName(),"r");
-
-            fgets($handle);
-            while(($data = fgetcsv($handle))!== FALSE)
-            {
-                $name = isset($data[0]) ? $data[0] : '';
-                $file = isset($data[1]) ? $data[1] : '';
-                $desc = isset($data[2]) ? $data[2] : '';
-                $price = isset($data[3]) ? $data[3] : '';
-
-                if(!empty($name) || !empty($desc)||!empty($price)){
-                    $fileName = null;
-                    if(filter_var($file, FILTER_VALIDATE_URL)||is_file($file)){
-                        $fileContents = file_get_contents($file);
-                        $fileExtenstion = pathinfo(parse_url($file,PHP_URL_PATH),PATHINFO_EXTENSION);
-
-                        $fileName = random_string('alnum',14) .'.'.$fileExtenstion;
-
-                        write_file(WRITEPATH . 'uploads/' . $fileName,$fileContents);
-                    }else{
-                        $this->model->insert(array(
-                            'prod_name' => $name,
-                            'prod_file' => $fileName,
-                            'prod_desc' => $desc,
-                            'prod_price' => $price
-                        ));
-                        fclose($handle);
-                    }
-                }else{
-                    fclose($handle);
-                    $this->session->setTempdata('uploadError', 'Name,Description,or Price Empty!');
-                }
-            }
-        }else{
-            $this->session->setTempdata('uploadError','');
-        }
+public function import()
+{
+    try {
+        $userData = $this->session->get('id');
+        $file = $this->request->getFile('importFile');
+        $handle = fopen($file->getTempName(), 'r');
+    } catch (\Exception $e) {
+        session()->setTempdata('error', 'Invalid file uploaded.');
+        return redirect()->back();
     }
+
+    fgets($handle);
+
+    while (($data = fgetcsv($handle)) !== false) {
+        $data = array_map('trim', $data);
+        list($name, $pic, $description, $price) = $data;
+
+        if (empty($name)||empty($pic)||empty($description)||empty($price)) {
+            session()->setTempdata('error', 'File content invalid.');
+            return redirect()->back();
+        }
+
+        $imageFileName = null;
+
+        if (filter_var($pic, FILTER_VALIDATE_URL)) {
+            $imageFile = file_get_contents($pic);
+
+            if ($imageFile !== false) {
+                $imageFileExtension = pathinfo(parse_url($pic, PHP_URL_PATH), PATHINFO_EXTENSION);
+                $imageFileName = random_string('alnum', 14) . '.' . $imageFileExtension;
+                write_file(WRITEPATH . 'uploads/' . $imageFileName, $imageFile);
+            }
+        } elseif (is_file($pic)) {
+            $imageFileExtension = pathinfo($pic, PATHINFO_EXTENSION);
+            $imageFileName = random_string('alnum', 14) . '.' . $imageFileExtension;
+            copy($pic, WRITEPATH . 'uploads/' . $imageFileName);
+        }
+
+        $this->model->insert([
+            'prod_name' => $name,
+            'prod_file' => $imageFileName,
+            'prod_desc' => $description,
+            'prod_price' => (float)$price,
+            'user'=>$userData
+        ]);
+    }
+    
+    session()->setTempdata('success', 'Data imported successfully.');
+    fclose($handle);
+    return redirect()->back();
+    
+}
+
+public function clear()
+{
+    $this->model->truncate();
+    delete_files('C:\xampp\htdocs\ci4\writable\uploads');
+    session()->setTempdata('success', 'Data cleared successfully.');
+    return redirect()->back(); 
+}
+
 }
 ?>
