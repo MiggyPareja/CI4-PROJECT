@@ -28,7 +28,7 @@ $userData = $page_session->get();
             <span class="text-danger"><small><?= validation_show_error('description'); ?></small></span>
         </div>
         
-        <div class="form-group-sm">
+        <div class="form-group-sm mb-3">
             <label for="price">Price:</label>
             <input class="form-control" type="number" name="price" id="price">
             <span class="text-danger"><small><?= validation_show_error('price'); ?></small></span>

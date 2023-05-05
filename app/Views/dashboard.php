@@ -32,7 +32,7 @@
 </div>
 
 
-<div class="bg-light py-2">
+<div class="bg-white py-2">
   <div class="container d-flex align-items-center">
     <h5 class="p-3 mb-0 text-uppercase">Welcome back, User <?= $userData['username'] ?></h5>
     <a class="btn btn-primary mr-2 rounded-pill" href="<?= base_url('/Add'); ?>">Add</a>
@@ -43,6 +43,11 @@
     </form>
   </div>
 </div>
+<?php if ($session->getFlashdata('search')) : ?>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <?= $session->getFlashdata('search');?>
+    </div>
+<?php endif; ?>
 <?php if ($session->getFlashdata('success')) : ?>
     <div class="alert alert-success alert-dismissible fade show" role="alert">
     <?= $session->getFlashdata('success');?>
@@ -56,42 +61,44 @@
 
 <div class="container mt-4">
   <div class="table-responsive">
-    <table class="table table-bordered table-striped">
-      <thead class="thead-light">
-        <tr>
-          <th class="text-center w-5">#</th>
-          <th class="text-center w-15">Product Name</th>
-          <th class="text-center w-20">File/Img</th>
-          <th class="text-center w-30">Description</th>
-          <th class="text-center w-10">Price</th>
-          <th class="text-center w-10">Created At</th>
-          <th class="text-center w-10">Updated At</th>
-          <th class="text-center w-10">Actions</th>
-        </tr>
-      </thead>
-      <tbody id="myTable">
-        <?php if (empty($products)): ?>
-          <tr>
-            <td colspan="8" class="text-center">No Products/Results found.</td>
-          </tr>
-        <?php endif; ?>
-        <?php foreach ($products as $product) : ?>
-          <tr>
-            <td class="text-break" style="width:4em"><?= $product['id']; ?></td>
-            <td class="text-break"><?= $product['prod_name']; ?></td>
-            <td class="text-break" style="width:12em"><a href="<?= base_url('dashboard/download/' . $product['prod_file']) ?>"><?= $product['prod_file'] ?></a></td>
-            <td class="text-break" style="width:14em"><?= $product['prod_desc']; ?></td>
-            <td class="text-break">$<?= $product['prod_price']; ?></td>
-            <td class="text-break"style="width:8em"><?= $product['created_at']; ?></td>
-            <td class="text-break"style="width:8em"><?= $product['updated_at']; ?></td>
-            <td class="text-center">
-              <a href="<?= base_url('/Dashboard/editPage/' . $product['id']) ?>" class="btn btn-sm btn-success mr-2" data-toggle="tooltip" data-placement="top" title="Edit"><i class="bi bi-pencil-fill"></i></a>
-              <a href="<?= base_url('/Dashboard/delete/' . $product['id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this product?')" data-toggle="tooltip" data-placement="top" title="Delete"><i class="bi bi-trash"></i></a>
-            </td>
-          </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
+  <table class="table table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Product Name</th>
+      <th>File/Img</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Created At</th>
+      <th>Updated At</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody id="myTable">
+    <?php if (empty($products)): ?>
+      <tr>
+        <td colspan="8" class="text-center"><samp>No Products/Results found.</samp></td>
+      </tr>
+    <?php endif; ?>
+    <?php foreach ($products as $product) : ?>
+      <tr>
+        <td><?= $product['id']; ?></td>
+        <td><?= $product['prod_name']; ?></td>
+        <td><a href="<?= base_url('dashboard/download/' . $product['prod_file']) ?>"><?= $product['prod_file'] ?></a></td>
+        <td><?= $product['prod_desc']; ?></td>
+        <td>$<?= $product['prod_price']; ?></td>
+        <td><?= $product['created_at']; ?></td>
+        <td><?= $product['updated_at']; ?></td>
+        <td>
+          <a href="<?= base_url('/Dashboard/editPage/' . $product['id']) ?>" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="Edit"><i class="bi bi-pencil-fill"></i></a>
+          <a href="<?= base_url('/Dashboard/delete/' . $product['id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this product?')" data-toggle="tooltip" data-placement="top" title="Delete"><i class="bi bi-trash"></i></a>
+        </td>
+      </tr>
+    <?php endforeach; ?>
+  </tbody>
+</table>
+
+    <?= $pager->links() ?>
   </div>
 </div>
 

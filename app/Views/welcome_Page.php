@@ -11,7 +11,6 @@
 <body>
     
     <div class="container mt-5">
-        
         <div class="row">
             <div class="col-md-6">
                 <a href="<?=base_url()?>register" class="btn btn-primary btn-lg btn-block">Register</a>

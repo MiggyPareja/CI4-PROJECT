@@ -1,6 +1,7 @@
 <?php 
 namespace App\Controllers;
 use App\Models\DashboardModel;
+use CodeIgniter\Pager\PagerInterface;
 
 class Dashboard extends BaseController{
     public $table;
@@ -14,12 +15,14 @@ class Dashboard extends BaseController{
     }
     public function index()
     {
+        $getUserId = $this->session->get('id');
         if(!(session()->has('id')))
         {
             return redirect()->to(base_url('/login'));
         }
         $data = [
-            'products' => $this->model->dashboard()
+            'products' => $this->model->where(['user' => $getUserId])->paginate(10),
+            'pager' => $this->model->pager,
         ];
         return view('templates/db_header')
         .view('dashboard',$data)
@@ -87,14 +90,22 @@ class Dashboard extends BaseController{
     }
     public function search()
     {
+        
         $term = $this->request->getGet('searchTable');
+        if(empty($term))
+        {
+            session()->setFlashdata('search', 'Search Empty, Returning to Dashboard...');
+            return redirect()->to(base_url('/dashboard'));
+        }
+
         $data = [
-            'products' =>$this->model->like (['prod_name' =>$term])
+            'products' => $this->model->like (['prod_name' =>$term])
                     ->orLike(['prod_desc' =>$term])
                     ->orLike(['prod_price' =>$term])
-                    ->findAll()
+                    ->paginate(10),
+            'pager' => $this->model->pager,
         ];
-        
+
         session()->setFlashdata('success', 'Data Indexes Successfully');
         return view('templates/db_header')
             .view('dashboard',$data)

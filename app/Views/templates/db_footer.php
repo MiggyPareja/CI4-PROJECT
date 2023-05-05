@@ -4,7 +4,7 @@
     <script>
         setTimeout(function(){
     document.querySelector('.alert').remove();
-}, 1000);
+}, 3000);
     </script>
 
 </body>
