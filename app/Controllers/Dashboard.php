@@ -2,8 +2,6 @@
 namespace App\Controllers;
 use App\Models\DashboardModel;
 
-use function PHPUnit\Framework\isEmpty;
-
 class Dashboard extends BaseController{
     public $table;
     public $model;
@@ -16,6 +14,10 @@ class Dashboard extends BaseController{
     }
     public function index()
     {
+        if(!(session()->has('id')))
+        {
+            return redirect()->to(base_url('/login'));
+        }
         $data = [
             'products' => $this->model->dashboard()
         ];
@@ -23,17 +25,11 @@ class Dashboard extends BaseController{
         .view('dashboard',$data)
         .view('templates/db_footer');
     }
-    public function add()
-    {
-        return view('templates/db_header')
-            .view('add')
-            .view('templates/db_footer');
-    }
     public function delete($id)
     {
         if($this->model->delete($id))
         {
-            $this->session->setTempdata('success','Deleted Succesfully');
+            $this->session->setFlashdata('success','Deleted Succesfully');
             return redirect()->to(previous_url());
         }else{
             return redirect()->to(previous_url());
@@ -80,11 +76,12 @@ class Dashboard extends BaseController{
         ];
 
         $this->model->update($id, $data);
-        $this->session->setTempdata('success', 'Successfully Edited Product!');
-        return redirect()->to(current_url());
+        $this->session->setFlashdata('success', 'Successfully Edited Product!');
+        return redirect()->to(base_url('/Dashboard'));
     } else {
+        $this->session->setFlashdata('error', 'Error updating');
         $vali['validation'] = $this->validator;
-        return redirect()->to(previous_url());
+        return redirect()->back()->withInput();
         }
     
     }
@@ -98,7 +95,7 @@ class Dashboard extends BaseController{
                     ->findAll()
         ];
         
-        session()->setTempdata('success', 'Data Indexes Successfully');
+        session()->setFlashdata('success', 'Data Indexes Successfully');
         return view('templates/db_header')
             .view('dashboard',$data)
             .view('templates/db_footer');
@@ -109,64 +106,62 @@ class Dashboard extends BaseController{
 
          return $this->response->download($path,null);
     }
-public function import()
-{
-    try {
+    public function import()
+    {
         $userData = $this->session->get('id');
         $file = $this->request->getFile('importFile');
-        $handle = fopen($file->getTempName(), 'r');
-    } catch (\Exception $e) {
-        session()->setTempdata('error', 'Invalid file uploaded.');
-        return redirect()->back();
-    }
-
-    fgets($handle);
-
-    while (($data = fgetcsv($handle)) !== false) {
-        $data = array_map('trim', $data);
-        list($name, $pic, $description, $price) = $data;
-
-        if (empty($name)||empty($pic)||empty($description)||empty($price)) {
-            session()->setTempdata('error', 'File content invalid.');
+    
+        if (!$file || !$file->isValid()) {
+            session()->setFlashdata('error', 'Invalid file uploaded.');
             return redirect()->back();
         }
-
-        $imageFileName = null;
-
-        if (filter_var($pic, FILTER_VALIDATE_URL)) {
-            $imageFile = file_get_contents($pic);
-
-            if ($imageFile !== false) {
-                $imageFileExtension = pathinfo(parse_url($pic, PHP_URL_PATH), PATHINFO_EXTENSION);
+    
+        $handle = fopen($file->getTempName(), 'r');
+        
+        
+        fgetcsv($handle);
+    
+        while (($data = fgetcsv($handle)) !== false) {
+            list($name, $image, $description, $price) = array_map('trim', $data);
+        
+            $imageFileName = null;
+    
+            if (filter_var($image, FILTER_VALIDATE_URL)) {
+                $imageFile = file_get_contents($image);
+        
+                if ($imageFile !== false) {
+                    $imageFileExtension = pathinfo(parse_url($image, PHP_URL_PATH), PATHINFO_EXTENSION);
+                    $imageFileName = random_string('alnum', 14) . '.' . $imageFileExtension;
+                    write_file(WRITEPATH . 'uploads/' . $imageFileName, $imageFile);
+                }
+            } elseif (is_file($image)) {
+                $imageFileExtension = pathinfo($image, PATHINFO_EXTENSION);
                 $imageFileName = random_string('alnum', 14) . '.' . $imageFileExtension;
-                write_file(WRITEPATH . 'uploads/' . $imageFileName, $imageFile);
+                copy($image, WRITEPATH . 'uploads/' . $imageFileName);
             }
-        } elseif (is_file($pic)) {
-            $imageFileExtension = pathinfo($pic, PATHINFO_EXTENSION);
-            $imageFileName = random_string('alnum', 14) . '.' . $imageFileExtension;
-            copy($pic, WRITEPATH . 'uploads/' . $imageFileName);
+        
+            $productData = [
+                'prod_name' => $name,
+                'prod_file' => $imageFileName,
+                'prod_desc' => $description,
+                'prod_price' => (float)$price,
+                'user' => $userData
+            ];
+        
+            $this->model->insert($productData);
         }
-
-        $this->model->insert([
-            'prod_name' => $name,
-            'prod_file' => $imageFileName,
-            'prod_desc' => $description,
-            'prod_price' => (float)$price,
-            'user'=>$userData
-        ]);
+    
+        session()->setFlashdata('success', 'Data imported successfully.');
+        fclose($handle);
+        return redirect()->back();
     }
     
-    session()->setTempdata('success', 'Data imported successfully.');
-    fclose($handle);
-    return redirect()->back();
-    
-}
 
 public function clear()
 {
     $this->model->truncate();
     delete_files('C:\xampp\htdocs\ci4\writable\uploads');
-    session()->setTempdata('success', 'Data cleared successfully.');
+    session()->setFlashdata('success', 'Data cleared successfully.');
     return redirect()->to(base_url('/dashboard')); 
 }
 

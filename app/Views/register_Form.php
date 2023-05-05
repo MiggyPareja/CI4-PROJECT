@@ -38,8 +38,9 @@
                     <div class="form-group">
                         <input class="form-control btn btn-primary mb-2" type="submit" name="register" value="Register">
                     </div>
-                    <div class="form-group">
-                        <a href="<?=base_url('/login');?>">Already Have an Account?</a>
+                    <div class="form-group d-flex align-items-center">
+                        <p class="m-0">Already Have an Account?</p>
+                        <a class="d-inline" href="<?=base_url('/login');?>">Login</a>
                     </div>
                     
                 <?= form_close(); ?>

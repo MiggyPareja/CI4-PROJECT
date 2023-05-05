@@ -3,9 +3,9 @@ $page_session = \Config\Services::session();
 $userData = $page_session->get();
 ?>
 
-<?php if ($page_session->getTempdata('successEdit')) : ?>
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <?= $page_session->getTempdata('successEdit');?>
+<?php if ($page_session->getTempdata('error')) : ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <?= $page_session->getTempdata('error');?>
     </div>
 <?php endif; ?>
 <div class="container my-5">
