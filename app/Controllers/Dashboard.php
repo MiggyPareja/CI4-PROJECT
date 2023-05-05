@@ -92,7 +92,7 @@ class Dashboard extends BaseController{
     {
         
         $term = $this->request->getGet('searchTable');
-        if(empty($term))
+        if(empty($term)|| empty($products))
         {
             session()->setFlashdata('search', 'Search Empty, Returning to Dashboard...');
             return redirect()->to(base_url('/dashboard'));
