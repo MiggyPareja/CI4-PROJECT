@@ -94,7 +94,7 @@ class Dashboard extends BaseController{
         
         if(empty($products))
         {
-            session()->setFlashdata('error', "No '$term' Found, Returning to Dashboard...");
+            session()->setFlashdata('search', "No '$term' Found, Returning to Dashboard...");
             return redirect()->back()->withInput();
         }
         
