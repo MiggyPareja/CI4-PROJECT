@@ -85,7 +85,7 @@
     <tr>
       <td><?= $product['id']; ?></td>
       <td><?= $product['prod_name']; ?></td>
-      <td><a href="<?= base_url('dashboard/download/' . $product['prod_file']) ?>"><?= $product['prod_file'] ?></a></td>
+      <td class="text-break"><a href="<?= base_url('dashboard/download/' . $product['prod_file']) ?>"><?= $product['prod_file'] ?></a></td>
       <td><?= $product['prod_desc']; ?></td>
       <td>$<?= $product['prod_price']; ?></td>
       <td><?= $product['created_at']; ?></td>

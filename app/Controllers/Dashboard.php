@@ -7,13 +7,13 @@ class Dashboard extends BaseController{
     public $table;
     public $model;
     public $session;
-    public function __construct()
+public function __construct()
     {
         helper(['form','filesystem','url','security','text']);
         $this->session = session();
         $this->model = new DashboardModel();
     }
-    public function index()
+public function index()
     {
         $getUserId = $this->session->get('id');
         if(!(session()->has('id')))
@@ -28,7 +28,7 @@ class Dashboard extends BaseController{
         .view('dashboard',$data)
         .view('templates/db_footer');
     }
-    public function delete($id)
+public function delete($id)
     {
         if($this->model->delete($id))
         {
@@ -38,12 +38,12 @@ class Dashboard extends BaseController{
             return redirect()->to(previous_url());
         }
     }
-    public function logout()
+public function logout()
     {  
         session_destroy();
         return redirect()->to(base_url('/login'));
     }
-    public function editPage($id)
+public function editPage($id)
     {
         $data['product'] = $this->model->find($id);
         return view('templates/db_header')
@@ -51,7 +51,7 @@ class Dashboard extends BaseController{
           . view('templates/db_footer');
 
     }
-    public function update($id)
+public function update($id)
     {
         $product = $this->model->find($id);
         $vali['validation'] = null;
@@ -88,7 +88,7 @@ class Dashboard extends BaseController{
         }
     
     }
-    public function search()
+public function search()
     {
         $term = $this->request->getGet('searchTable');
         
@@ -113,13 +113,13 @@ class Dashboard extends BaseController{
                 .view('templates/db_footer');
         
     }
-    public function download($filename)
+public function download($filename)
     {
          $path = WRITEPATH . "uploads/" .$filename;
 
          return $this->response->download($path,null);
     }
-    public function import()
+public function import()
     {
         $userData = $this->session->get('id');
         $file = $this->request->getFile('importFile');
@@ -174,7 +174,7 @@ class Dashboard extends BaseController{
     
 public function clear()
 {
-    
+
     $this->model->truncate();
     delete_files('C:\xampp\htdocs\ci4\writable\uploads');
     session()->setFlashdata('success', 'Data cleared successfully.');
