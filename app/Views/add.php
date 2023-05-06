@@ -30,7 +30,7 @@ $userData = $page_session->get();
         
         <div class="form-group-sm mb-3">
             <label for="price">Price:</label>
-            <input class="form-control" type="number" name="price" id="price">
+            <input class="form-control" type="decimal" name="price" id="price">
             <span class="text-danger"><small><?= validation_show_error('price'); ?></small></span>
         </div>
         <div class="form-group-sm" hidden>

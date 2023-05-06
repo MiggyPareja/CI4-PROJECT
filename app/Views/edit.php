@@ -30,7 +30,7 @@ $userData = $page_session->get();
         </div>
         <div class="form-group">
           <label for="editPrice">Price:</label>
-          <input type="number" class="form-control" id="editPrice" name="editPrice" value="<?= $product['prod_price'] ?>">
+          <input type="decimal" class="form-control" id="editPrice" name="editPrice" value="<?= $product['prod_price'] ?>">
           <span class="text-danger"><?= validation_show_error('editPrice'); ?></span>
         </div>
         <div class="form-group">

@@ -92,6 +92,11 @@ class Dashboard extends BaseController{
     {
         $term = $this->request->getGet('searchTable');
         
+        if(empty($term))
+        {
+            session()->setFlashdata('search', "Search bar Empty, Returning to Dashboard...");
+            return redirect()->back()->withInput();
+        }
         
         $data = [
             'products' => $this->model->like (['prod_name' =>$term])
@@ -100,11 +105,7 @@ class Dashboard extends BaseController{
                     ->paginate(10),
             'pager' => $this->model->pager,
         ];
-        if(empty($term))
-        {
-            session()->setFlashdata('search', "Search bar Empty, Returning to Dashboard...");
-            return redirect()->back()->withInput();
-        }
+        
 
         session()->setFlashdata('success', 'Data Indexes Successfully');
         return view('templates/db_header')

@@ -15,7 +15,7 @@
     </div>
 </nav>
 
-<div class="jumbotron jumbotron-fluid bg-light">
+<div class="jumbotron jumbotron-fluid bg-light border-bottom border-dark">
     <div class="container">
         <h1 class="display-3">Manage your products with ease</h1>
         <p class="lead">Product Handler is a reliable and efficient platform that enables businesses of all sizes to manage their products with ease. Our user-friendly interface allows you to effortlessly organize, categorize, and track your inventory in real-time, ensuring that you always have accurate and up-to-date information at your fingertips.</p>
@@ -50,5 +50,41 @@
             </div>
         </div>
     </div>
-</div
+</div>
+
+<section class="bg-light border-top border-dark">
+  <div class="container">
+    <h2 class="text-center mb-4 mt-4">What our customers are saying</h2>
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="card p-4">
+          <p class="lead">"Product Handler has completely transformed the way we manage our inventory. It's so easy to use and has saved us so much time and effort."</p>
+          <div class="text-right">
+            <p class="font-weight-bold mb-0">John Smith</p>
+            <small>Owner, MeowMeow Corporation</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card p-4">
+          <p class="lead">"I love how customizable Product Handler is. It allows us to organize our inventory in a way that makes sense for our business."</p>
+          <div class="text-right">
+            <p class="font-weight-bold mb-0">Jane Doe</p>
+            <small>Manager, Meowers Company</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card p-4">
+          <p class="lead">"Real-time tracking is a game-changer. We always know exactly what we have in stock, which has helped us avoid costly mistakes."</p>
+          <div class="text-right">
+            <p class="font-weight-bold mb-0">Mike Johnson</p>
+            <small>CEO, Meow2 Industries</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
