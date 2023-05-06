@@ -35,9 +35,9 @@
 <div class="bg-white py-2">
   <div class="container d-flex align-items-center">
     <h5 class="p-3 mb-0 text-uppercase">Welcome back, User <?= $userData['username'] ?></h5>
-    <a class="btn btn-primary mr-2 rounded-pill" href="<?= base_url('/Add'); ?>">Add</a>
+    <a class="btn btn-success mr-2 rounded-pill" href="<?= base_url('/Add'); ?>">Add</a>
     <a class="btn btn-primary rounded-pill" href="#importModal" data-toggle="modal">Import</a>
-    <a class="btn btn-primary ml-2 rounded-pill" href="<?= base_url('/dashboard/clear'); ?>">Clear</a>
+    <a class="btn btn-danger ml-2 rounded-pill" href="<?= base_url('/dashboard/clear'); ?>">Clear</a>
     <form class="form-inline my-2 my-lg-0 ml-auto" action="<?= base_url('/dashboard/search') ?>" method="get">
       <input class="form-control mr-sm-2" type="text" placeholder="Search..." aria-label="Search" id="myInput" name="searchTable">
     </form>
@@ -59,7 +59,7 @@
     </div>
 <?php endif; ?>
 
-<div class="container mt-4">
+<div class="container mt-2">
   <div class="table-responsive">
   <table class="table table-hover">
   <thead>

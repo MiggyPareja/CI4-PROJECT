@@ -35,8 +35,7 @@ $userData = $page_session->get();
         </div>
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Edit</button>
-          <button type="reset" class="btn btn-secondary">Reset</button>
-          <a href="<?= base_url('/dashboard') ?>" class="btn btn-secondary">Back</a>
+          <a href="<?= base_url('/dashboard') ?>" class="btn btn-danger">Back</a>
         </div>
       </form>
     </div>

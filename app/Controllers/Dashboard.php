@@ -90,14 +90,14 @@ class Dashboard extends BaseController{
     }
     public function search()
     {
-        
         $term = $this->request->getGet('searchTable');
-        if(empty($term)|| empty($products))
+        
+        if(empty($products))
         {
-            session()->setFlashdata('search', 'Search Empty, Returning to Dashboard...');
-            return redirect()->to(base_url('/dashboard'));
+            session()->setFlashdata('error', "No '$term' Found, Returning to Dashboard...");
+            return redirect()->back()->withInput();
         }
-
+        
         $data = [
             'products' => $this->model->like (['prod_name' =>$term])
                     ->orLike(['prod_desc' =>$term])
@@ -105,6 +105,7 @@ class Dashboard extends BaseController{
                     ->paginate(10),
             'pager' => $this->model->pager,
         ];
+        
 
         session()->setFlashdata('success', 'Data Indexes Successfully');
         return view('templates/db_header')
@@ -129,11 +130,9 @@ class Dashboard extends BaseController{
     
         $handle = fopen($file->getTempName(), 'r');
         
-        
         fgetcsv($handle);
-    
         while (($data = fgetcsv($handle)) !== false) {
-            list($name, $image, $description, $price) = array_map('trim', $data);
+            list($name, $image, $description, $price) = $data;
         
             $imageFileName = null;
     
@@ -161,15 +160,20 @@ class Dashboard extends BaseController{
         
             $this->model->insert($productData);
         }
-    
-        session()->setFlashdata('success', 'Data imported successfully.');
-        fclose($handle);
-        return redirect()->back();
+        if(empty($productData))
+        {
+            session()->setFlashdata('error', 'No data Found.');
+            return redirect()->back()->withInput();
+        }else{
+            session()->setFlashdata('success', 'Data imported successfully.');
+            fclose($handle);
+            return redirect()->back();
+        }
     }
     
-
 public function clear()
 {
+    
     $this->model->truncate();
     delete_files('C:\xampp\htdocs\ci4\writable\uploads');
     session()->setFlashdata('success', 'Data cleared successfully.');
