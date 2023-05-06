@@ -149,7 +149,7 @@ class Dashboard extends BaseController{
                 $imageFileExtension = pathinfo($image, PATHINFO_EXTENSION);
                 $imageFileName = random_string('alnum', 14) . '.' . $imageFileExtension;
                 copy($image, WRITEPATH . 'uploads/' . $imageFileName);
-            }
+            }       
         
             $productData = [
                 'prod_name' => $name,
