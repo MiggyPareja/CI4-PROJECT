@@ -44,7 +44,6 @@
           <a class="btn btn-link" href="<?=base_url('/login');?>">Login</a>
         </div>
       <?= form_close(); ?>
-      
     </div>
   </div>
 </div>

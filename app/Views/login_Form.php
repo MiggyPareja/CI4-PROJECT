@@ -1,7 +1,7 @@
 <?php $page_session = \Config\Services::session(); ?>
-<div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="row">
-        <div class="col-12 mx-auto border border-dark rounded p-4">
+<div class="container py-5">
+  <div class="row justify-content-center align-items-center">
+    <div class="col col-sm-8 col-md-6 col-lg-4 col-xl-4 bg-light border rounded shadow">
             <h1 class="text-center mb-4">Login</h1>
             <?php if ($page_session->getTempdata('errmsg')) : ?>
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -32,9 +32,6 @@
                     <p>Don't have an account? <a href="<?= base_url('/register') ?>">Sign up</a></p>
                 </div>
             <?= form_close(); ?>
-            <div class="form-group text-center mt-3">
-                
-            </div>
         </div>
     </div>
 </div>

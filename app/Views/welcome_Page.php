@@ -1,9 +1,9 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light border-bottom border-secondary">
     <a class="navbar-brand" href="#">Product Handler</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="collapse navbar-collapse " id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
                 <a class="nav-link" href="<?=base_url()?>register">Register</a>
@@ -17,7 +17,7 @@
 
 <div class="jumbotron jumbotron-fluid bg-light">
     <div class="container">
-        <h1 class="display-4">Manage your products with ease</h1>
+        <h1 class="display-3">Manage your products with ease</h1>
         <p class="lead">Product Handler is a reliable and efficient platform that enables businesses of all sizes to manage their products with ease. Our user-friendly interface allows you to effortlessly organize, categorize, and track your inventory in real-time, ensuring that you always have accurate and up-to-date information at your fingertips.</p>
         <a href="<?=base_url()?>register" class="btn btn-primary btn-lg">Get started now</a>
     </div>
