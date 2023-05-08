@@ -18,7 +18,7 @@ public function __construct()
 public function index()
     {
         $getUserId = $this->session->get('id');
-        if(!(session()->has('id')))
+        if(!(session()->has('isLoggedIn')))
         {
             return redirect()->to(base_url('/login'));
         }
@@ -44,13 +44,13 @@ public function delete($id)
     }
 public function logout()
     {  
-        session_destroy();
+        $this->session->destroy();
         return redirect()->to(base_url('/login'));
     }
 public function editPage($id)
 
     {
-        if(!(session()->has('id')))
+        if(!(session()->has('isLoggedIn')))
         {
             return redirect()->to(base_url('/login'));
         }
@@ -105,6 +105,7 @@ public function search()
             'products' => $this->model->like (['prod_name' =>$term])
                     ->orLike(['prod_desc' =>$term])
                     ->orLike(['prod_price' =>$term])
+                    ->orLike(['prod_file' =>$term])
                     ->paginate(10),
             'pager' => $this->model->pager,
         ];
@@ -149,12 +150,12 @@ public function import()
         
                 if ($imageFile !== false) {
                     $imageFileExtension = pathinfo(parse_url($image, PHP_URL_PATH), PATHINFO_EXTENSION);
-                    $imageFileName ='data-'. random_string('alnum', 14) . '.' . $imageFileExtension;
+                    $imageFileName ='data-'. random_string('alnum', 8) . '.' . $imageFileExtension;
                     write_file(WRITEPATH . 'uploads/' . $imageFileName, $imageFile);
                 }
             } elseif (is_file($image)) {
                 $imageFileExtension = pathinfo($image, PATHINFO_EXTENSION);
-                $imageFileName ='data-'. random_string('alnum', 14) . '.' . $imageFileExtension;
+                $imageFileName = 'data-'. random_string('alnum', 8) . '.' . $imageFileExtension;
                 copy($image, WRITEPATH . 'uploads/' . $imageFileName);
             }       
         
@@ -188,9 +189,5 @@ public function clear()
     return redirect()->to(base_url('/dashboard')); 
 
     }
-public function test()
-{
-    return view('test');
-}
 
 }

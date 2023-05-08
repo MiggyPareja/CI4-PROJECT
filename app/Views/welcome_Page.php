@@ -87,4 +87,34 @@
   </div>
 </section>
 
+<footer class="bg-light border-top border-secondary mt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h5>About Us</h5>
+        <p>Product Handler is a reliable and efficient platform that enables businesses of all sizes to manage their products with ease.</p>
+      </div>
+      <div class="col-md-3">
+        <h5>Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a href="<?=base_url()?>register">Register</a></li>
+          <li><a href="<?=base_url()?>login">Login</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h5>Contact Us</h5>
+        <ul class="list-unstyled">
+          <li><i class="fas fa-envelope"></i> info@producthandler.com</li>
+          <li><i class="fas fa-phone"></i> +1 (123) 456-7890</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <p class="text-center">&copy; 2023 Product Handler</p>
+      </div>
+    </div>
+  </div>
+</footer> 
+
 
