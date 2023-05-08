@@ -35,6 +35,7 @@ public function delete($id)
     {
         if($this->model->delete($id))
         {
+            
             $this->session->setFlashdata('success','Deleted Succesfully');
             return redirect()->to(previous_url());
         }else{
@@ -100,11 +101,6 @@ public function search()
     {
         $term = $this->request->getGet('searchTable');
         
-        if(empty($term))
-        {
-            session()->setFlashdata('search', "Search bar Empty, Returning to Dashboard...");
-            return redirect()->back()->withInput();
-        }
         $data = [
             'products' => $this->model->like (['prod_name' =>$term])
                     ->orLike(['prod_desc' =>$term])
@@ -112,11 +108,16 @@ public function search()
                     ->paginate(10),
             'pager' => $this->model->pager,
         ];
-        
-        session()->setFlashdata('success', 'Data Indexes Successfully');
-        return view('templates/db_header')
-                .view('dashboard',$data)
-                .view('templates/db_footer');
+        if(empty($term))
+        {
+            session()->setFlashdata('search', "Search bar Empty, Returning to Dashboard...");
+            return redirect()->to(base_url('/dashboard'));
+        }else{
+            session()->setFlashdata('success', 'Data Indexes Successfully');
+            return view('templates/db_header')
+                    .view('dashboard',$data)
+                    .view('templates/db_footer');
+        }
         
     }
 public function download($filename)
@@ -148,12 +149,12 @@ public function import()
         
                 if ($imageFile !== false) {
                     $imageFileExtension = pathinfo(parse_url($image, PHP_URL_PATH), PATHINFO_EXTENSION);
-                    $imageFileName = random_string('alnum', 14) . '.' . $imageFileExtension;
+                    $imageFileName ='data-'. random_string('alnum', 14) . '.' . $imageFileExtension;
                     write_file(WRITEPATH . 'uploads/' . $imageFileName, $imageFile);
                 }
             } elseif (is_file($image)) {
                 $imageFileExtension = pathinfo($image, PATHINFO_EXTENSION);
-                $imageFileName = random_string('alnum', 14) . '.' . $imageFileExtension;
+                $imageFileName ='data-'. random_string('alnum', 14) . '.' . $imageFileExtension;
                 copy($image, WRITEPATH . 'uploads/' . $imageFileName);
             }       
         
@@ -185,8 +186,11 @@ public function clear()
     delete_files('C:\xampp\htdocs\ci4\writable\uploads');
     session()->setFlashdata('success', 'Data cleared successfully.');
     return redirect()->to(base_url('/dashboard')); 
-    
+
     }
+public function test()
+{
+    return view('test');
+}
 
 }
-?>
