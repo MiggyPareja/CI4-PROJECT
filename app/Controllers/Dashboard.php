@@ -105,8 +105,6 @@ public function search()
             session()->setFlashdata('search', "Search bar Empty, Returning to Dashboard...");
             return redirect()->back()->withInput();
         }
-        
-        
         $data = [
             'products' => $this->model->like (['prod_name' =>$term])
                     ->orLike(['prod_desc' =>$term])
@@ -181,13 +179,14 @@ public function import()
     }
     
 public function clear()
-{
+    {
 
     $this->model->truncate();
     delete_files('C:\xampp\htdocs\ci4\writable\uploads');
     session()->setFlashdata('success', 'Data cleared successfully.');
     return redirect()->to(base_url('/dashboard')); 
-}
+    
+    }
 
 }
 ?>
