@@ -44,11 +44,11 @@ class Login extends BaseController
                         return redirect()->to(base_url('/Dashboard'));
                     }else{
                         $session->setTempdata('errmsg','Password is Incorrect.');
-                        return redirect()->to(current_url());
+                        return redirect()->to(base_url('/login'));
                     }
                 }else{
-                    $session->setTempdata('error','Email or Password Incorrect.');
-                    return redirect()->to(current_url());
+                    $session->setTempdata('errmsg','Email or Password Incorrect.');
+                    return redirect()->to(base_url('/login'));
                 }
                 
              }else{

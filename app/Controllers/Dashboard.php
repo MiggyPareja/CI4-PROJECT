@@ -9,9 +9,11 @@ class Dashboard extends BaseController{
     public $session;
 public function __construct()
     {
+        
         helper(['form','filesystem','url','security','text']);
         $this->session = session();
         $this->model = new DashboardModel();
+        
     }
 public function index()
     {
@@ -20,6 +22,7 @@ public function index()
         {
             return redirect()->to(base_url('/login'));
         }
+        
         $data = [
             'products' => $this->model->where(['user' => $getUserId])->paginate(10),
             'pager' => $this->model->pager,
@@ -44,7 +47,12 @@ public function logout()
         return redirect()->to(base_url('/login'));
     }
 public function editPage($id)
+
     {
+        if(!(session()->has('id')))
+        {
+            return redirect()->to(base_url('/login'));
+        }
         $data['product'] = $this->model->find($id);
         return view('templates/db_header')
          . view('edit', $data)
@@ -98,6 +106,7 @@ public function search()
             return redirect()->back()->withInput();
         }
         
+        
         $data = [
             'products' => $this->model->like (['prod_name' =>$term])
                     ->orLike(['prod_desc' =>$term])
@@ -106,7 +115,6 @@ public function search()
             'pager' => $this->model->pager,
         ];
         
-
         session()->setFlashdata('success', 'Data Indexes Successfully');
         return view('templates/db_header')
                 .view('dashboard',$data)

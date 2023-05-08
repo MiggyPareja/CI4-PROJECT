@@ -37,7 +37,7 @@
         </div>
         <div class="form-group">
           <input class="form-control btn btn-primary mb-2" type="submit" name="register" value="Register">
-            <a class="form-control btn btn-secondary mb-2" href="<?=base_url();?>">Back to Welcome Page</a>
+            <a class="form-control btn btn-secondary mb-2" href="<?=base_url();?>">Back</a>
         </div>
         <div class="form-group d-flex align-items-center">
           <p class="m-0">Already have an account?</p>

@@ -14,6 +14,10 @@ class Add extends BaseController
     }
     public function index()
     {
+        if(!(session()->has('id')))
+        {
+            return redirect()->to(base_url('/login'));
+        }
         return view('templates/db_header')
         .view('add')
         .view('templates/db_footer');

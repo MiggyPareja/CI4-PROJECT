@@ -26,7 +26,7 @@
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary btn-lg btn-block" type="submit" name="login">Login</button>
-                    <a href="<?= base_url('/') ?>" class="btn btn-secondary btn-lg btn-block mt-2">Back to Welcome Page</a>
+                    <a href="<?= base_url('/') ?>" class="btn btn-secondary btn-lg btn-block mt-2">Back</a>
                 </div>
                 <div class="form-group text-center">
                     <p>Don't have an account? <a href="<?= base_url('/register') ?>">Sign up</a></p>
