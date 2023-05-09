@@ -13,6 +13,11 @@
                     <?= $page_session->getTempdata('error'); ?>
                 </div>
             <?php endif; ?>
+            <?php if ($page_session->getFlashdata('error')) : ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $page_session->getFlashdata('error'); ?>
+                </div>
+            <?php endif; ?>
             <?= form_open(); ?>
                 <div class="form-group">
                     <label for="email">Email:</label>

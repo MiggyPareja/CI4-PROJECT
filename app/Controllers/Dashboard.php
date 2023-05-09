@@ -7,9 +7,9 @@ class Dashboard extends BaseController{
     public $table;
     public $model;
     public $session;
+    public $validation;
 public function __construct()
     {
-        
         helper(['form','filesystem','url','security','text']);
         $this->session = session();
         $this->model = new DashboardModel();
@@ -129,57 +129,66 @@ public function download($filename)
          return $this->response->download($path,null);
     }
 public function import()
-    {
-        $userData = $this->session->get('id');
-        $file = $this->request->getFile('importFile');
-    
-        if (!$file || !$file->isValid()) {
-            session()->setFlashdata('error', 'Invalid file uploaded.');
-            return redirect()->back();
+{
+    $userData = $this->session->get('id');
+    $file = $this->request->getFile('importFile');
+
+    if (!$file || !$file->isValid()) {
+        session()->setFlashdata('error', 'Invalid file uploaded.');
+        return redirect()->back();
+    }
+
+    $handle = fopen($file->getTempName(), 'r');
+
+    fgetcsv($handle);
+    while (($data = fgetcsv($handle)) !== false) {
+        list($name, $image, $description, $price) = $data;
+        $imageFileName = null;
+
+        if (filter_var($image, FILTER_VALIDATE_URL)) {
+            $imageFile = file_get_contents($image);
+
+            if ($imageFile !== false) {
+                $imageFileExtension = pathinfo(parse_url($image, PHP_URL_PATH), PATHINFO_EXTENSION);
+                $imageFileName ='data-'. random_string('alnum', 8) . '.' . $imageFileExtension;
+                write_file(WRITEPATH . 'uploads/' . $imageFileName, $imageFile);
+            }
+        } elseif (is_file($image)) {
+            $imageFileExtension = pathinfo($image, PATHINFO_EXTENSION);
+            $imageFileName = 'data-'. random_string('alnum', 8) . '.' . $imageFileExtension;
+            copy($image, WRITEPATH . 'uploads/' . $imageFileName);
         }
-    
-        $handle = fopen($file->getTempName(), 'r');
+
+        $productData = [
+            'prod_name' => $name,
+            'prod_file' => $imageFileName,
+            'prod_desc' => $description,
+            'prod_price' => (float)$price,
+            'user' => $userData
+        ];
+
+        $validation =  \Config\Services::validation();
+        $validation->setRules([
+        'prod_name' => 'required|min_length[3]|max_length[35]',
+        'prod_file'=>'ext_in[importFile,csv]',
+        'prod_desc' => 'required|min_length[3]|max_length[100]',
+        'prod_price' => 'required|numeric'
+        ]);
         
-        fgetcsv($handle);
-        while (($data = fgetcsv($handle)) !== false) {
-            list($name, $image, $description, $price) = $data;
-        
-            $imageFileName = null;
-    
-            if (filter_var($image, FILTER_VALIDATE_URL)) {
-                $imageFile = file_get_contents($image);
-        
-                if ($imageFile !== false) {
-                    $imageFileExtension = pathinfo(parse_url($image, PHP_URL_PATH), PATHINFO_EXTENSION);
-                    $imageFileName ='data-'. random_string('alnum', 8) . '.' . $imageFileExtension;
-                    write_file(WRITEPATH . 'uploads/' . $imageFileName, $imageFile);
-                }
-            } elseif (is_file($image)) {
-                $imageFileExtension = pathinfo($image, PATHINFO_EXTENSION);
-                $imageFileName = 'data-'. random_string('alnum', 8) . '.' . $imageFileExtension;
-                copy($image, WRITEPATH . 'uploads/' . $imageFileName);
-            }       
-        
-            $productData = [
-                'prod_name' => $name,
-                'prod_file' => $imageFileName,
-                'prod_desc' => $description,
-                'prod_price' => (float)$price,
-                'user' => $userData
-            ];
-        
-            $this->model->insert($productData);
-        }
-        if(empty($productData))
-        {
-            session()->setFlashdata('error', 'No data Found.');
-            return redirect()->back()->withInput();
-        }else{
-            session()->setFlashdata('success', 'Data imported successfully.');
+        if (!$validation->run($productData)) {
+            session()->setFlashdata('error', $validation->listErrors());
             fclose($handle);
             return redirect()->back();
         }
+
+        $this->model->insert($productData);
     }
+
+    session()->setFlashdata('success', 'Data imported successfully.');
+    fclose($handle);
+    return redirect()->back();
+}
+
     
 public function clear()
     {

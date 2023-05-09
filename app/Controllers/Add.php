@@ -31,7 +31,7 @@ class Add extends BaseController
         {
             $rules = [
                 'name' => 'required|min_length[3]|max_length[35]',
-                'file'=>'max_size[field_name,2048]',
+                'file'=>'max_size[file,2048]',
                 'description' => 'required|min_length[3]|max_length[100]',
                 'price' => 'required|numeric'
             ];
