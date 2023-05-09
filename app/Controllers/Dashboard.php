@@ -137,6 +137,10 @@ public function import()
         session()->setFlashdata('error', 'Invalid file uploaded.');
         return redirect()->back();
     }
+    if ($file->getExtension() !== 'csv') {
+        session()->setFlashdata('error', 'Invalid file type. Only CSV files are allowed.');
+        return redirect()->back();
+    }
 
     $handle = fopen($file->getTempName(), 'r');
 
@@ -170,7 +174,6 @@ public function import()
         $validation =  \Config\Services::validation();
         $validation->setRules([
         'prod_name' => 'required|min_length[3]|max_length[35]',
-        'prod_file'=>'ext_in[importFile,csv]',
         'prod_desc' => 'required|min_length[3]|max_length[100]',
         'prod_price' => 'required|numeric'
         ]);
