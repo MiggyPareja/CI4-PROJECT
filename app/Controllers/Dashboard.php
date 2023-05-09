@@ -66,6 +66,7 @@ public function update($id)
         $vali['validation'] = null;
         $rules = [
             'editName' => 'required|min_length[3]|max_length[35]',
+            'editFile'=>'max_size[field_name,2048]',
             'editDescription' => 'required|min_length[3]|max_length[100]',
             'editPrice' => 'required|numeric'
         ];

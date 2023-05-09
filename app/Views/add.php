@@ -21,6 +21,7 @@ $userData = $page_session->get();
         <div class="form-group-sm">
             <label for="file">File:</label>
             <input class="form-control-file" type="File" name="file" id="file">
+            <span class="text-danger"><small><?= validation_show_error('file'); ?></small></span>
         </div>
         <div class="form-group-sm">
             <label  for="desciption">Description:</label>

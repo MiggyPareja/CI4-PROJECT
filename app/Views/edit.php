@@ -22,10 +22,11 @@ $userData = $page_session->get();
         <div class="form-group">
           <label for="editFile">File:</label>
           <input type="file" class="form-control-file" id="editFile" name="editFile">
+          <span class="text-danger"><?= validation_show_error('editFile'); ?></span>
         </div>
         <div class="form-group">
           <label for="editDescription">Description:</label>
-          <input type="text" class="form-control" id="editDescription" name="editDescription" value="<?= $product['prod_desc'] ?>">
+          <textarea name="editDescription" id="" class="form-control" rows="6"><?= $product['prod_desc'] ?></textarea>
           <span class="text-danger"><?= validation_show_error('editDescription'); ?></span>
         </div>
         <div class="form-group">
