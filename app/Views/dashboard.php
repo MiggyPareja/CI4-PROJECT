@@ -59,46 +59,63 @@
     <?= $session->getFlashdata('error');?>
     </div>
 <?php endif; ?>
-
-
-
-<div class="container mt-1 bg-white p-1">
-  <div class="table-responsive">
-    <table class="table table-hover">
-      <thead>
-  <tr>
-    <th class="border-0">#</th>
-    <th class="border-0">Product Name</th>
-    <th class="border-0">File/Img</th>
-    <th class="border-0">Description</th>
-    <th class="border-0">Price</th>
-    <th class="border-0">Actions</th>
-  </tr>
-      </thead>
-<tbody id="myTable">
-<?php if (empty($products)): ?>
-      <tr>
-        <td colspan="8" class="text-center"><samp>No Products/Results found.</samp></td>
-      </tr>
-<?php endif; ?>
-  <?php foreach ($products as $product) : ?>
-    <tr>
-      <td><?= $product['id']; ?></td>
-      <td style="width: 20%;"><?= $product['prod_name']; ?></td>
-      <td class="text-break" style="width: 20%;"><a href="<?= base_url('dashboard/download/' . $product['prod_file']) ?>"><?= $product['prod_file'] ?></a></td>
-      <td class="text-break" style="width: 50%;"><?= $product['prod_desc']; ?></td>
-      <td>₱<?= $product['prod_price']; ?></td>
-      <td style="width: 10%">
-        <a href="<?= base_url('/Dashboard/editPage/' . $product['id']) ?>" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="Edit"><i class="bi bi-pencil-fill"></i></a>
-        <a href="<?= base_url('/Dashboard/delete/' . $product['id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this product?')" data-toggle="tooltip" data-placement="top" title="Delete"><i class="bi bi-trash"></i></a>
-      </td>
-    </tr>
-    <tr class="table-spacing"></tr>
-  <?php endforeach; ?>
-</tbody>
-</table>
+<div class="container bg-white p-3">
+  <div class="d-flex justify-content-between">
+  
+    <form class="mr-2" action="<?= current_url()?>" method="post" name="show_entries">
+      <label for="show_entries" class="mr-2">Show 
+        <select name="show_entries" id="show_entries">
+          <option value="10" >10</option>
+          <option value="20" >20</option>
+          <option value="50" >50</option>
+          <option value="100">100</option>
+        </select>
+        Entries
+      </label>
+      <button class="btn btn-secondary btn-sm" type="submit">Filter</button>
+    </form>
     <?= $pager->links() ?>
   </div>
+  
+  <div class="table-responsive mt-3" style="height: 450px; overflow-y: scroll;">
+    <table class="table table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th>#</th>
+          <th>Product Name</th>
+          <th>File/Img</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="myTable">
+        <?php if (empty($products)): ?>
+          <tr>
+            <td colspan="6" class="text-center"><samp>No Products/Results found.</samp></td>
+          </tr>
+        <?php endif; ?>
+        <?php foreach ($products as $product) : ?>
+          <tr>
+            <td><?= $product['id']; ?></td>
+            <td style="max-width: 200px;"><?= $product['prod_name']; ?></td>
+            <td class="text-break"><a href="<?= base_url('dashboard/download/' . $product['prod_file']) ?>"><?= $product['prod_file'] ?></a></td>
+            <td class="text-break"><?= $product['prod_desc']; ?></td>
+            <td>₱<?= $product['prod_price']; ?></td>
+            <td>
+              <div class="btn-group" role="group">
+                <a href="<?= base_url('/Dashboard/editPage/' . $product['id']) ?>" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit"><i class="bi bi-pencil-fill"></i></a>
+                <a href="<?= base_url('/Dashboard/delete/' . $product['id']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this product?')" data-toggle="tooltip" data-placement="top" title="Delete"><i class="bi bi-trash"></i></a>
+              </div>
+            </td>
+          </tr>
+          <tr class="table-spacing"></tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
 </div>
+
+
 
 

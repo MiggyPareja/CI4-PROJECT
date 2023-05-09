@@ -25,6 +25,9 @@
         <li class="nav-item active">
           <a href="<?= base_url('/Dashboard')?>" class="nav-link" >Home <span class="sr-only">(current)</span></a>
         </li>
+        <li class="nav-item active">
+          <a href="<?= base_url('/Calendar')?>" class="nav-link" >To-Do <span class="sr-only">(current)</span></a>
+        </li>
     </ul>
   </div>
   <div id="txt" class="text-white"></div>

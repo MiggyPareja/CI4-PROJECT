@@ -17,6 +17,7 @@ public function __construct()
     }
 public function index()
     {
+        $perPage = $this->request->getPost('show_entries');
         $getUserId = $this->session->get('id');
         if(!(session()->has('isLoggedIn')))
         {
@@ -24,7 +25,7 @@ public function index()
         }
         
         $data = [
-            'products' => $this->model->where(['user' => $getUserId])->paginate(10),
+            'products' => $this->model->where(['user' => $getUserId])->paginate($perPage),
             'pager' => $this->model->pager,
         ];
         return view('templates/db_header')
@@ -100,6 +101,7 @@ public function update($id)
     }
 public function search()
     {
+        $perPage = $this->request->getPost('show_entries');
         $term = $this->request->getGet('searchTable');
         
         $data = [
@@ -107,7 +109,7 @@ public function search()
                     ->orLike(['prod_desc' =>$term])
                     ->orLike(['prod_price' =>$term])
                     ->orLike(['prod_file' =>$term])
-                    ->paginate(10),
+                    ->paginate($perPage),
             'pager' => $this->model->pager,
         ];
         if(empty($term))
@@ -195,8 +197,8 @@ public function import()
     
 public function clear()
     {
-
-    $this->model->truncate();
+    $getUserId = $this->session->get('id');
+    $this->model->where(['user' => $getUserId])->delete();
     delete_files('C:\xampp\htdocs\ci4\writable\uploads');
     session()->setFlashdata('success', 'Data cleared successfully.');
     return redirect()->to(base_url('/dashboard')); 
