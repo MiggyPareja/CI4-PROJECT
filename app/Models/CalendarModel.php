@@ -9,7 +9,7 @@ class CalendarModel extends Model
 
     protected $primaryKey = 'id';
     
-     protected $allowedFields = ['Appointment', 'appoint_desc','Time_start', 'Time_end'];
+     protected $allowedFields = ['Appointment', 'appoint_desc','start_date', 'end_date'];
 }
 
 ?>
