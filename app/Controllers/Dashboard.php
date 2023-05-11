@@ -36,7 +36,6 @@ public function delete($id)
     {
         if($this->model->delete($id))
         {
-            
             $this->session->setFlashdata('success','Deleted Succesfully');
             return redirect()->to(previous_url());
         }else{
