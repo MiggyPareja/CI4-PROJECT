@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
           }
        });
+
           $('#edit-btn').click(function() {
           var eventId = info.event.id;
           var appointment = info.event.title;
@@ -75,9 +76,8 @@ document.addEventListener('DOMContentLoaded', function() {
           $('#notes').val(notes);
           $('#start_date').val(start.toISOString().slice(0, 16));
           $('#end_date').val(end ? end.toISOString().slice(0, 16) : '');
+          $('#eventModal').modal('close');
         });
-
-
     }
 
   });
