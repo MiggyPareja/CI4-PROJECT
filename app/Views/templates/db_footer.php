@@ -39,26 +39,47 @@ document.addEventListener('DOMContentLoaded', function() {
     initialView: 'dayGridMonth',
     events: '<?= base_url("/calendar/get") ?>',
     eventClick: function(info) {
-      var eventId = info.event.id;
-      $('#eventTitle').text(info.event.title);
-      $('#eventStart').text(info.event.start.toLocaleString());
-      $('#eventEnd').text(info.event.end.toLocaleString());
-      $('#eventDesc').text(info.event.extendedProps.appoint_desc);
+    var eventId = info.event.id;
+    $('#eventTitle').text(info.event.title);
+    $('#eventStart').text(info.event.start.toLocaleString());
+    $('#eventEnd').text(info.event.end.toLocaleString());
+    $('#eventDesc').text(info.event.extendedProps.appoint_desc);
 
-      $('#eventModal').modal('show');
+    $('#eventModal').modal('show');
 
-      $.ajax({
-        url: '<?= base_url("/calendar/delete") ?>', 
-        type: 'POST',
-        data: {id: eventId},
-        success: function(response) {
-          console.log(response); 
-        },
-        error: function(xhr, status, error) {
-          console.log("Error:", error); 
-        }
-      });
+    $('#delete-btn').click(function() {
+      if (confirm('Are you sure you want to delete this Appointment?')) {
+        $.ajax({
+          url: '<?= base_url("/calendar/delete") ?>', 
+          type: 'POST',
+          data: {id: eventId},
+          success: function(response) {
+            console.log(response); 
+          },
+          error: function(xhr, status, error) {
+            console.log("Error:", error); 
+              }
+            });
+          }
+       });
+          $('#edit-btn').click(function() {
+          var eventId = info.event.id;
+          var appointment = info.event.title;
+          var notes = info.event.extendedProps.appoint_desc;
+          var start = info.event.start;
+          var end = info.event.end;
+
+          // Set the values of the form fields
+          $('#eventId').val(eventId);
+          $('#appointment').val(appointment);
+          $('#notes').val(notes);
+          $('#start_date').val(start.toISOString().slice(0, 16));
+          $('#end_date').val(end ? end.toISOString().slice(0, 16) : '');
+        });
+
+
     }
+
   });
   calendar.render();
 });

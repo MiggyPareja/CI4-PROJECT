@@ -74,6 +74,24 @@ public function delete()
 public function update()
 {
     $id = $this->request->getPost('id');
+    $appointment = $this->request->getPost('appointment');
+    $notes = $this->request->getPost('notes');
+    $start = $this->request->getPost('start_date');
+    $end = $this->request->getPost('end_date');
+
+    $data = [
+        'appoint_title' => $appointment,
+        'appoint_desc' => $notes,
+        'appoint_start' => $start,
+        'appoint_end' => $end,
+    ];
+
+    if($this->model->where('id',$id)->update($data))
+    {
+
+    }
+    
+        
 }
 
 

@@ -24,7 +24,7 @@
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
     <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a href="<?= base_url('/Dashboard')?>" class="nav-link" >Home <span class="sr-only">(current)</span></a>
+          <a href="<?= base_url('/Dashboard')?>" class="nav-link" >Products <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
           <a href="<?= base_url('/Calendar')?>" class="nav-link" >To-Do <span class="sr-only">(current)</span></a>
