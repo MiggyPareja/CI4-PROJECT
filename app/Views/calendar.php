@@ -38,6 +38,37 @@
     </div>
   </div>  
 
+  <div class="table-responsive mt-3" style="height: 450px; overflow-y: scroll;">
+    <table class="table table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th>#</th>
+          <th>Appointment</th>
+          <th>Description</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="myTable">
+        <?php if (empty($todo)): ?>
+          <tr>
+            <td colspan="6" class="text-center"><samp>No Products/Results found.</samp></td>
+          </tr>
+        <?php endif; ?>
+        <?php foreach ($todo as $todos) : ?>
+          <tr>
+            <td><?= $todos['id']; ?></td>
+            <td style="max-width: 200px;"><?= $todos['Appointment']; ?></td>
+            <td class="text-break"><?= $todos['appoint_desc']; ?></td>
+            <td>₱<?= $todos['start_date']; ?></td>
+            <td>₱<?= $todos['end_date']; ?></td>
+          </tr>
+          <tr class="table-spacing"></tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
 
 <div id="eventModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -54,7 +85,7 @@
       
       <div class="modal-footer" >
         <a class="btn btn-danger" href="<?= base_url('/Calendar/delete/')?>" id="delete-btn">Delete</a>
-        <a class="btn btn-warning" id="edit-btn" >Edit</a>
+        <a class="btn btn-warning" id="edit-btn" href="<?= base_url('/Calendar/edit_page')?>" >Edit</a>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
       </div>
     </div>

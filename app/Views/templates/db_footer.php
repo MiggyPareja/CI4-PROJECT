@@ -2,7 +2,9 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
 
 
     <script>
@@ -40,6 +42,10 @@ document.addEventListener('DOMContentLoaded', function() {
     events: '<?= base_url("/calendar/get") ?>',
     eventClick: function(info) {
     var eventId = info.event.id;
+    var eventName = info.event.title;
+    var eventDescription = info.event.extendedProps.appoint_desc;
+    var eventStart = info.event.start.toLocaleString();
+    var eventEnd = info.event.end.toLocaleString();
     $('#eventTitle').text(info.event.title);
     $('#eventStart').text(info.event.start.toLocaleString());
     $('#eventEnd').text(info.event.end.toLocaleString());
@@ -60,24 +66,9 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Error:", error); 
               }
             });
+            $('#eventModal').modal('hide');
           }
        });
-
-          $('#edit-btn').click(function() {
-          var eventId = info.event.id;
-          var appointment = info.event.title;
-          var notes = info.event.extendedProps.appoint_desc;
-          var start = info.event.start;
-          var end = info.event.end;
-
-          // Set the values of the form fields
-          $('#eventId').val(eventId);
-          $('#appointment').val(appointment);
-          $('#notes').val(notes);
-          $('#start_date').val(start.toISOString().slice(0, 16));
-          $('#end_date').val(end ? end.toISOString().slice(0, 16) : '');
-          $('#eventModal').modal('close');
-        });
     }
 
   });
@@ -87,9 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 </body>
-<link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
+
 
 
 </html>
