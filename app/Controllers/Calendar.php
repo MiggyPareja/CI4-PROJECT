@@ -71,8 +71,9 @@ public function delete()
             return redirect()->to(base_url('/calendar'))->withInput();
         }
 }
-public function edit_page()
+public function edit_page($id)
 {
+    $data['todo'] =$this->model->find($id);
     return view('templates/db_header').
             view('edit_Calendar') . 
             view('templates/db_footer');
@@ -81,17 +82,6 @@ public function edit_page()
 
 public function update()
 {
-    $id = $this->request->getPost('id');
-    if($this->model->where('id',$id)->update($id))
-    {
-        $this->session->setFlashdata('Calendar','Appointment Updated');
-        return redirect()->to(base_url('/calendar'))->withInput();
-    }else{
-        $this->session->setFlashdata('Calendar','Update Error');
-        return redirect()->to(base_url('/calendar'))->withInput();
-    }
     
-
-
 }
 }

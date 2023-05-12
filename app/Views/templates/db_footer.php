@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var eventDescription = info.event.extendedProps.appoint_desc;
     var eventStart = info.event.start.toLocaleString();
     var eventEnd = info.event.end.toLocaleString();
+    $('#eventID').text(eventId);
     $('#eventTitle').text(info.event.title);
     $('#eventStart').text(info.event.start.toLocaleString());
     $('#eventEnd').text(info.event.end.toLocaleString());
@@ -76,9 +77,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 </script>
-
 </body>
-
-
-
 </html>

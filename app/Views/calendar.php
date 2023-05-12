@@ -53,7 +53,7 @@
       <tbody id="myTable">
         <?php if (empty($todo)): ?>
           <tr>
-            <td colspan="6" class="text-center"><samp>No Products/Results found.</samp></td>
+            <td colspan="6" class="text-center"><samp>No Appointments Scheduled.</samp></td>
           </tr>
         <?php endif; ?>
         <?php foreach ($todo as $todos) : ?>
@@ -63,6 +63,7 @@
             <td class="text-break"><?= $todos['appoint_desc']; ?></td>
             <td>₱<?= $todos['start_date']; ?></td>
             <td>₱<?= $todos['end_date']; ?></td>
+            
           </tr>
           <tr class="table-spacing"></tr>
         <?php endforeach; ?>
@@ -77,6 +78,7 @@
         <h4 class="modal-title">Event Details</h4>
       </div>
       <div class="modal-body">
+        <p hidden><strong>ID:</strong> <span id="eventID" ></span></p>
         <p><strong>Title:</strong> <span id="eventTitle"></span></p>
         <p><strong>Description:</strong> <span id="eventDesc"></span></p>
         <p><strong>Start:</strong> <span id="eventStart"></span></p>
@@ -85,7 +87,7 @@
       
       <div class="modal-footer" >
         <a class="btn btn-danger" href="<?= base_url('/Calendar/delete/')?>" id="delete-btn">Delete</a>
-        <a class="btn btn-warning" id="edit-btn" href="<?= base_url('/Calendar/edit_page')?>" >Edit</a>
+        <a class="btn btn-primary" id="edit-btn" href="<?= base_url('/Calendar/edit_page')?>" >Edit</a>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
       </div>
     </div>
