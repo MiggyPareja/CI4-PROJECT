@@ -61,9 +61,8 @@
             <td><?= $todos['id']; ?></td>
             <td style="max-width: 200px;"><?= $todos['Appointment']; ?></td>
             <td class="text-break"><?= $todos['appoint_desc']; ?></td>
-            <td>₱<?= $todos['start_date']; ?></td>
-            <td>₱<?= $todos['end_date']; ?></td>
-            
+            <td><?= $todos['start_date']; ?></td>
+            <td><?= $todos['end_date']; ?></td>
           </tr>
           <tr class="table-spacing"></tr>
         <?php endforeach; ?>
@@ -86,8 +85,9 @@
       </div>
       
       <div class="modal-footer" >
-        <a class="btn btn-danger" href="<?= base_url('/Calendar/delete/')?>" id="delete-btn">Delete</a>
-        <a class="btn btn-primary" id="edit-btn" href="<?= base_url('/Calendar/edit_page')?>" >Edit</a>
+        <a class="btn btn-danger" href="<?= base_url('/Calendar/delete/')?>" id="dlt-btn">Delete</a>
+        <a class="btn btn-primary" id="edt-btn"  >Edit</a>
+       
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
       </div>
     </div>

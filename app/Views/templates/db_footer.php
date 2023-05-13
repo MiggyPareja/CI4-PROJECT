@@ -8,25 +8,7 @@
 
 
     <script>
-        setTimeout(function(){
-    document.querySelector('.alert').remove();
-}, 2000);
-
-function startTime() {
-  const today = new Date();
-  let h = today.getHours();
-  let m = today.getMinutes();
-  let s = today.getSeconds();
-  m = checkTime(m);
-  s = checkTime(s);
-  document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
-  setTimeout(startTime, 1000);
-}
-
-function checkTime(i) {
-  if (i < 10) {i = "0" + i}; 
-  return i;
-}
+        
 //-------------------------------------------------------//
 document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar');
@@ -34,44 +16,26 @@ document.addEventListener('DOMContentLoaded', function() {
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+      right: 'listMonth,dayGridMonth,timeGridWeek,timeGridDay'
     },
-    themeSystem: 'bootstrap',
+    nowIndicator: true,
     height: 550,
-    initialView: 'dayGridMonth',
+    initialView: 'listMonth',
     events: '<?= base_url("/calendar/get") ?>',
     eventClick: function(info) {
-    var eventId = info.event.id;
-    var eventName = info.event.title;
-    var eventDescription = info.event.extendedProps.appoint_desc;
-    var eventStart = info.event.start.toLocaleString();
-    var eventEnd = info.event.end.toLocaleString();
-    $('#eventID').text(eventId);
-    $('#eventTitle').text(info.event.title);
-    $('#eventStart').text(info.event.start.toLocaleString());
-    $('#eventEnd').text(info.event.end.toLocaleString());
-    $('#eventDesc').text(info.event.extendedProps.appoint_desc);
-
-    $('#eventModal').modal('show');
-
-    $('#delete-btn').click(function() {
-      if (confirm('Are you sure you want to delete this Appointment?')) {
-        $.ajax({
-          url: '<?= base_url("/calendar/delete") ?>', 
-          type: 'POST',
-          data: {id: eventId},
-          success: function(response) {
-            console.log(response); 
-          },
-          error: function(xhr, status, error) {
-            console.log("Error:", error); 
-              }
-            });
-            $('#eventModal').modal('hide');
-          }
-       });
-    }
-
+      var eventId = info.event.id;
+      var eventTitle = info.event.title;
+      var eventDescription = info.event.extendedProps.appoint_desc;
+      var eventStart = info.event.start.toLocaleString();
+      var eventEnd = info.event.end.toLocaleString();
+      $('#eventID').text(eventId);
+      $('#eventTitle').text(eventTitle);
+      $('#eventStart').text(eventStart);
+      $('#eventEnd').text(eventEnd);
+      $('#eventDesc').text(eventDescription);
+      $('#eventModal').modal('show');
+      
+    },
   });
   calendar.render();
 });
