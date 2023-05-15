@@ -52,7 +52,6 @@ class Calendar extends BaseController
             $this->model->insert($calData);
             $this->session->setFlashdata('Calendar', 'Successfully added');
             return redirect()->to(base_url('/calendar'))->withInput();
-        
     }
 
     public function get()

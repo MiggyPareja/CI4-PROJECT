@@ -1,20 +1,20 @@
 <?php $session = session() ?>
 
 <div class="container mt-3" >
-    <div class="row">
-      <div class="col-md-3">
+  <div class="row">
+    <div class="col-md-3">
       <h3 id="calTitle">Add Appointment</h3>
       <?php if ($session->getFlashdata('Edit')) : ?>
           <div class="alert alert-warning alert-dismissible fade show" role="alert">
           <?= $session->getFlashdata('Edit');?>
-        </div>
+          </div>
       <?php endif; ?>
       <?php if ($session->getFlashdata('Calendar')) : ?>
           <div class="alert alert-warning alert-dismissible fade show" role="alert">
           <?= $session->getFlashdata('Calendar');?>
-        </div>
+          </div>
       <?php endif; ?>
-<form id="add-form" action="<?=base_url('/calendar/add')?>" method="post">
+<form id="add-form" action="<?=base_url('/Calendar/add')?>" method="post">
         
       <input type="hidden" name="id" id="eventId">
       <?= csrf_field() ?>
@@ -33,7 +33,7 @@
             </div>
             <div class="col">
               <label for="end_date">End Date/Time</label>
-              <input type="datetime-local" name="end_date" class="form-control" id="end_date" min="<?php echo date('Y-m-d');?>T00:00">
+              <input type="datetime-local" name="end_date" class="form-control" id="end_date" min="<?php echo date('Y-m-d');?>T00:00" required>
             </div>
           </div>
           <button type="submit" class="btn btn-primary mt-3">Add Appointment</button>
@@ -67,10 +67,10 @@
 </form>
         </div>
         <div class="col-md-9">
-        <div id="calendar"></div>
-      </div>
-    </div>
+            <div id="calendar"></div>
+        </div>
   </div>
+</div>
     
 
   <!-- <div class="table-responsive mt-3" style="height: 450px; overflow-y: scroll;">
