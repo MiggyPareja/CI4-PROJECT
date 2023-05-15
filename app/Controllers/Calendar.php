@@ -19,6 +19,10 @@ class Calendar extends BaseController
 
     public function index()
 {
+    if(!$this->session->has('isLoggedIn'))
+    {
+        return redirect()->to('/login');
+    }
     $data = [
         'todo' =>$this->model->findAll(),
         'id' =>$this->model->find('id')
@@ -36,7 +40,7 @@ class Calendar extends BaseController
             'start_date' => 'valid_date[]',
             'end_date' => 'valid_date[]',
         ];
-        
+        //Add Rules and Verifications
             $start_date = $this->request->getPost('start_date');
             $end_date = $this->request->getPost('end_date');
             $calData = [
@@ -78,13 +82,27 @@ class Calendar extends BaseController
                 return redirect()->to(base_url('/calendar'))->withInput();
             }
     }
-    public function edit_page() 
-    {
-        
-    }
-
+    
     public function update()
-    {
-        
+{
+    $id = $this->request->getPost('edit-eventId');
+
+    if($this->request->getMethod() == 'post') {
+        $data = [
+            'Appointment' => $this->request->getPost('edit-appointment'),
+            'appoint_desc' => $this->request->getPost('edit-notes'),
+            'start_date' => $this->request->getPost('editStart_date'),
+            'end_date' => $this->request->getPost('editEnd_date'),
+        ];
+        if ($this->model->update($id,$data)) {
+            $this->session->setFlashdata('Edit', 'Appointment Updated');
+            return redirect()->to(base_url('/Calendar'))->withInput();
+        } else {
+            $this->session->setFlashdata('Edit', 'Update Error');
+            return redirect()->to(base_url('/Calendar'))->withInput();
+        }
     }
+    
+}
+
 }

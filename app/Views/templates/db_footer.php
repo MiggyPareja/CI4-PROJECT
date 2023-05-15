@@ -7,38 +7,76 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
 
 
-    <script>
-        
-//-------------------------------------------------------//
+<script>
+
+var eventId, eventTitle, eventDescription, eventStart, eventEnd;
 document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar');
   var calendar = new FullCalendar.Calendar(calendarEl, {
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      right: 'listMonth,dayGridMonth,timeGridWeek,timeGridDay'
+      right: 'dayGridMonth,listMonth,timeGridWeek,timeGridDay'
     },
     nowIndicator: true,
     height: 550,
-    initialView: 'listMonth',
+    initialView: 'dayGridMonth',
     events: '<?= base_url("/calendar/get") ?>',
+    firstDay: 1,
+    slotMinTime: '08:00:00',
+    slotMaxTime: '17:00:00',
+
     eventClick: function(info) {
-      var eventId = info.event.id;
-      var eventTitle = info.event.title;
-      var eventDescription = info.event.extendedProps.appoint_desc;
-      var eventStart = info.event.start.toLocaleString();
-      var eventEnd = info.event.end.toLocaleString();
+      eventId = info.event.id;
+      eventTitle = info.event.title;
+      eventDescription = info.event.extendedProps.appoint_desc;
+      eventStart = info.event.start.toLocaleString();
+      eventEnd = info.event.end.toLocaleString();
       $('#eventID').text(eventId);
       $('#eventTitle').text(eventTitle);
       $('#eventStart').text(eventStart);
       $('#eventEnd').text(eventEnd);
       $('#eventDesc').text(eventDescription);
       $('#eventModal').modal('show');
-      
+
+      $('#edit-btn').on('click', function() {
+        $('#calTitle').text('Update Appointment');
+        $('#add-form').hide();
+        $('#eventModal').modal('hide');
+        $('#edit-form').removeAttr('hidden');
+        $('#edit-eventId').val(eventId);
+        $('#edit-appointment').val(eventTitle);
+        $('#edit-notes').val(eventDescription);
+        $('#editStart_date').val(new Date(eventStart).toISOString().slice(0, -8));
+        $('#editEnd_date').val(new Date(eventEnd).toISOString().slice(0, -8));
+      });
+      $('#delete-btn').on('click', function() {
+        $.post('<?=base_url('/Calendar/delete')?>', {
+            id: eventId
+          },
+          function(data, status, xhr) {
+            console.log('Request Successfully deleted');
+          }
+        );
+      });
+      $('#update-btn').on('click', function() {
+        $('#edit-form').hide();
+        $('#add-form').show();
+      });
     },
+
+    eventDidMount: function(info) {
+      var event = info.event;
+      var now = new Date();
+      if (event.end < now) {
+        calendar.getEventById(eventId).remove();
+      }
+    }
   });
+
   calendar.render();
 });
+
 
 </script>
 </body>
