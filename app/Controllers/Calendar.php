@@ -18,7 +18,7 @@ class Calendar extends BaseController
     }
 
     public function index()
-{
+    {
     if(!$this->session->has('isLoggedIn'))
     {
         return redirect()->to('/login');
@@ -30,7 +30,7 @@ class Calendar extends BaseController
     return view('templates/db_header') .
         view('calendar',$data) .
         view('templates/db_footer');
-}
+    }
 
     public function add()
     { 
@@ -40,7 +40,7 @@ class Calendar extends BaseController
             'start_date' => 'valid_date[]',
             'end_date' => 'valid_date[]',
         ];
-        //Add Rules and Verifications
+            //Add Rules and Verifications
             $start_date = $this->request->getPost('start_date');
             $end_date = $this->request->getPost('end_date');
             $calData = [
@@ -51,11 +51,11 @@ class Calendar extends BaseController
             ];
             $this->model->insert($calData);
             $this->session->setFlashdata('Calendar', 'Successfully added');
-            return redirect()->to(base_url('/calendar'))->withInput();
+            return redirect()->to(base_url('/Calendar'))->withInput();
     }
 
     public function get()
-{
+    {
     $getAll = $this->model->findAll();
     $data = [];
     foreach ($getAll as $get) {
@@ -68,7 +68,7 @@ class Calendar extends BaseController
         ];
     }
     return $this->response->setJSON($data);
-}
+    }
     public function delete()
     {
         $id = $this->request->getPost('id');
@@ -83,7 +83,7 @@ class Calendar extends BaseController
     }
     
     public function update()
-{
+    {
     $id = $this->request->getPost('edit-eventId');
 
     if($this->request->getMethod() == 'post') {
@@ -102,6 +102,6 @@ class Calendar extends BaseController
         }
     }
     
-}
+    }
 
 }

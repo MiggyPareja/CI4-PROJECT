@@ -73,7 +73,7 @@
 </div>
     
 
-  <!-- <div class="table-responsive mt-3" style="height: 450px; overflow-y: scroll;">
+  <!-- <div class="table-responsive mt-3" style="height: 450px; overflow-y: scroll;"> -->
     <table class="table table-hover">
       <thead class="thead-light">
         <tr>
@@ -103,7 +103,7 @@
         <?php endforeach; ?>
       </tbody>
     </table>
-  </div> -->
+  </div>
 
 <div id="eventModal" class="modal fade" role="dialog">
   <div class="modal-dialog">

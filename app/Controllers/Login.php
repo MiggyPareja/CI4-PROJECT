@@ -41,7 +41,7 @@ class Login extends BaseController
                             'isLoggedIn' => true,
                         ];
                         $session ->set($session_data);
-                        return redirect()->to(base_url('/Dashboard'));
+                        return redirect()->to(base_url('/Calendar'));
                     }else{
                         $session->setTempdata('errmsg','Password is Incorrect.');
                         return redirect()->to(base_url('/login'));
