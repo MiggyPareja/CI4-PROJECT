@@ -84,23 +84,23 @@ class Calendar extends BaseController
     
     public function update()
     {
-    $id = $this->request->getPost('edit-eventId');
+        $id = $this->request->getPost('edit-eventId');
 
-    if($this->request->getMethod() == 'post') {
-        $data = [
-            'Appointment' => $this->request->getPost('edit-appointment'),
-            'appoint_desc' => $this->request->getPost('edit-notes'),
-            'start_date' => $this->request->getPost('editStart_date'),
-            'end_date' => $this->request->getPost('editEnd_date'),
-        ];
-        if ($this->model->update($id,$data)) {
-            $this->session->setFlashdata('Edit', 'Appointment Updated');
-            return redirect()->to(base_url('/Calendar'))->withInput();
-        } else {
-            $this->session->setFlashdata('Edit', 'Update Error');
-            return redirect()->to(base_url('/Calendar'))->withInput();
+        if($this->request->getMethod() == 'post') {
+            $data = [
+                'Appointment' => $this->request->getPost('edit-appointment'),
+                'appoint_desc' => $this->request->getPost('edit-notes'),
+                'start_date' => $this->request->getPost('editStart_date'),
+                'end_date' => $this->request->getPost('editEnd_date'),
+            ];
+            if ($this->model->update($id,$data)) {
+                $this->session->setFlashdata('Edit', 'Appointment Updated');
+                return redirect()->to(base_url('/Calendar'))->withInput();
+            } else {
+                $this->session->setFlashdata('Edit', 'Update Error');
+                return redirect()->to(base_url('/Calendar'))->withInput();
+            }
         }
-    }
     
     }
     

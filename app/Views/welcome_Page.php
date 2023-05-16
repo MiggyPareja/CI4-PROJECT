@@ -19,7 +19,7 @@
     <div class="container" >
         <h1 class="display-4">Manage your products with ease</h1>
         <p class="lead">Product Handler is a reliable and efficient platform that enables businesses of all sizes to manage their products with ease. Our user-friendly interface allows you to effortlessly organize, categorize, and track your inventory in real-time, ensuring that you always have accurate and up-to-date information at your fingertips.</p>
-        <a href="<?=base_url()?>register" class="btn btn-primary btn-lg">Get started now</a>
+        <a href="<?=base_url()?>login" class="btn btn-primary btn-lg">Get started now</a>
     </div>
 </div>
 
