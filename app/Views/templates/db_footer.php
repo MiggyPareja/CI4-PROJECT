@@ -19,13 +19,14 @@ document.addEventListener('DOMContentLoaded', function() {
       right: 'dayGridMonth,listMonth,timeGridWeek,timeGridDay'
     },
     nowIndicator: true,
-    height: 550,
+    height: 620,
     initialView: 'dayGridMonth',
     events: '<?= base_url("/calendar/get") ?>',
     firstDay: 1,
     slotMinTime: '08:00:00',
     slotMaxTime: '17:00:00',
-
+    navLinks:true,
+    dayMaxEventRows: true,
     eventClick: function(info) {
       eventId = info.event.id;
       eventTitle = info.event.title;
@@ -38,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
       $('#eventEnd').text(eventEnd);
       $('#eventDesc').text(eventDescription);
       $('#eventModal').modal('show');
-
+      
       $('#edit-btn').on('click', function() {
         $('#calTitle').text('Update Appointment');
         $('#add-form').hide();

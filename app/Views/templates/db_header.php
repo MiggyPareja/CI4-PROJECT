@@ -38,15 +38,15 @@ function checkTime(i) {
     <span class="navbar-toggler-icon"></span>
   </button>
   
-  <a class="navbar-brand text-decoration-none text-white"><i class="bi bi-journal-bookmark-fill"></i> Product Handler</a>
+  <a class="navbar-brand text-decoration-none text-white t"><i class="bi bi-journal-bookmark-fill"></i> Product Handler</a>
   
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
     <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a href="<?= base_url('/Dashboard')?>" class="nav-link" >Products <span class="sr-only">(current)</span></a>
+          <a href="<?= base_url('/Calendar')?>" class="nav-link" >To-Do <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-          <a href="<?= base_url('/Calendar')?>" class="nav-link" >To-Do <span class="sr-only">(current)</span></a>
+          <a href="<?= base_url('/Dashboard')?>" class="nav-link" >Products <span class="sr-only">(current)</span></a>
         </li>
     </ul>
   </div>

@@ -18,13 +18,13 @@
         
       <input type="hidden" name="id" id="eventId">
       <?= csrf_field() ?>
-          <div class="form-group">
+          <div class="form-gr oup">
             <label for="appointment">Appointment Name</label>
             <input type="text" name="appointment" class="form-control" id="appointment" required>
           </div>
           <div class="form-group">
             <label for="notes">Notes</label>
-            <textarea name="notes" id="notes"  class="form-control"></textarea>
+            <textarea name="notes" id="notes"  class="form-control overflow-auto" style="height: 75px; resize: none;"></textarea>
           </div>
           <div class="form-row">
             <div class="col">
@@ -50,7 +50,7 @@
           </div>
           <div class="form-group">
             <label for="edit-notes">Notes</label>
-            <textarea name="edit-notes" id="edit-notes"  class="form-control"></textarea>
+            <textarea name="edit-notes" id="edit-notes"  class="form-control overflow-auto"style="height: 75px;  resize: none;"></textarea>
           </div>
           <div class="form-row">
             <div class="col">
@@ -65,15 +65,15 @@
           <button type="submit" class="btn btn-primary mt-3" id="update-btn">Update Appointment</button>
           <button class="btn btn-secondary mt-3" type="button" id="back-btn"><a class="text-decoration-none text-white" href="<?=base_url('/calendar')?>">Back</a></button>
 </form>
-        </div>
+      </div>
         <div class="col-md-9">
-            <div id="calendar"></div>
+          <div id="calendar"></div>
         </div>
   </div>
 </div>
     
 
-  <!-- <div class="table-responsive mt-3" style="height: 450px; overflow-y: scroll;"> -->
+  <!-- <div class="table-responsive mt-3" style="height: 450px; overflow-y: scroll;">
     <table class="table table-hover">
       <thead class="thead-light">
         <tr>
@@ -103,7 +103,7 @@
         <?php endforeach; ?>
       </tbody>
     </table>
-  </div>
+  </div> -->
 
 <div id="eventModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -114,7 +114,7 @@
       <div class="modal-body">
         <p hidden><strong>ID:</strong> <span id="eventID" ></span></p>
         <p><strong>Title:</strong> <span id="eventTitle"></span></p>
-        <p><strong>Description:</strong> <span id="eventDesc"></span></p>
+        <p><strong>Description:</strong> <span class="text-break" id="eventDesc"></span></p>
         <p><strong>Start:</strong> <span id="eventStart"></span></p>
         <p><strong>End:</strong> <span id="eventEnd"></span></p>
       </div>
