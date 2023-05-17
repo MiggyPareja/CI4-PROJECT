@@ -12,7 +12,7 @@ class Calendar extends BaseController
 
     public function __construct()
     {
-        helper(['date']);
+        helper(['date','form']);
         $this->session = session();
         $this->model = new CalendarModel();
     }
@@ -34,24 +34,37 @@ class Calendar extends BaseController
 
     public function add()
     { 
-        $rules =[
-            'appointment' => 'required|min_length[3]|max_length[50]',
-            'notes' => 'required|min_length[3]',
-            'start_date' => 'valid_date[]',
-            'end_date' => 'valid_date[]',
-        ];
-            //Add Rules and Verifications
-            $start_date = $this->request->getPost('start_date');
-            $end_date = $this->request->getPost('end_date');
-            $calData = [
-                'Appointment' => $this->request->getPost('appointment'),
-                'appoint_desc' => $this->request->getPost('notes'),
-                'start_date' => $start_date,
-                'end_date' => $end_date,
+        $data = [];
+        $data['validation'] =null;
+        if($this->request->getMethod() == 'post'){
+            $rules =[
+                'appointment' => 'required|min_length[3]|max_length[50]',
+                'notes' => 'required|min_length[3]',
+                'start_date' => 'valid_date[]',
+                'end_date' => 'valid_date[]',
             ];
-            $this->model->insert($calData);
-            $this->session->setFlashdata('Calendar', 'Successfully added');
-            return redirect()->to(base_url('/Calendar'))->withInput();
+        }
+            if($this->validate($rules))
+            {
+                $start_date = $this->request->getPost('start_date');
+                $end_date = $this->request->getPost('end_date');
+                $calData = [
+                    'Appointment' => $this->request->getPost('appointment'),
+                    'appoint_desc' => $this->request->getPost('notes'),
+                    'start_date' => $start_date,
+                    'end_date' => $end_date,
+                ];
+                if($this->model->insert($calData))
+                {
+                    $this->session->setFlashdata('Calendar', 'Successfully added');
+                    return redirect()->to(base_url('/Calendar'))->withInput();
+                }
+            }else{
+                $data['validation'] = $this->validator;
+            } 
+            return view('templates/db_header') .
+            view('calendar',$data) .
+            view('templates/db_footer'); 
     }
 
     public function get()
@@ -74,12 +87,13 @@ class Calendar extends BaseController
         $id = $this->request->getPost('id');
             if($this->model->where('id',$id)->delete())
             {
-                $this->session->setFlashdata('Calendar','Appointment Deleted');
-                return redirect()->to(base_url('/calendar'))->withInput();
+                $this->session->setFlashdata('Calendar', 'Successfully deleted');
             }else{
                 $this->session->setFlashdata('Calendar','Delete Error');
                 return redirect()->to(base_url('/calendar'))->withInput();
             }
+            $this->session->setFlashdata('Calendar','Appointment Deleted');
+                return redirect()->to(base_url('/calendar'))->withInput();
     }
     
     public function update()

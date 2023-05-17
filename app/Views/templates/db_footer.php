@@ -23,10 +23,9 @@ document.addEventListener('DOMContentLoaded', function() {
     initialView: 'dayGridMonth',
     events: '<?= base_url("/calendar/get") ?>',
     firstDay: 1,
-    slotMinTime: '08:00:00',
-    slotMaxTime: '17:00:00',
+    minTime: '08:00:00',
+    maxTime: '17:00:00',
     navLinks:true,
-    dayMaxEventRows: true,
     eventClick: function(info) {
       eventId = info.event.id;
       eventTitle = info.event.title;
@@ -65,14 +64,6 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#add-form').show();
       });
     },
-
-    eventDidMount: function(info) {
-      var event = info.event;
-      var now = new Date();
-      if (event.end < now) {
-        calendar.getEventById(eventId).remove();
-      }
-    }
   });
 
   calendar.render();

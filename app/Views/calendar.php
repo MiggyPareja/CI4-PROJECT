@@ -5,7 +5,7 @@
     <div class="col-md-3">
       <h3 id="calTitle">Add Appointment</h3>
       <?php if ($session->getFlashdata('Edit')) : ?>
-          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
           <?= $session->getFlashdata('Edit');?>
           </div>
       <?php endif; ?>
@@ -15,31 +15,33 @@
           </div>
       <?php endif; ?>
 <form id="add-form" action="<?=base_url('/Calendar/add')?>" method="post">
-        
       <input type="hidden" name="id" id="eventId">
       <?= csrf_field() ?>
           <div class="form-gr oup">
             <label for="appointment">Appointment Name</label>
-            <input type="text" name="appointment" class="form-control" id="appointment" required>
+            <input type="text" name="appointment" class="form-control" id="appointment">
+            <span class="text-danger"><small><?= validation_show_error('appointment'); ?></small></span>
           </div>
           <div class="form-group">
             <label for="notes">Notes</label>
             <textarea name="notes" id="notes"  class="form-control overflow-auto" style="height: 75px; resize: none;"></textarea>
+            <span class="text-danger"><small><?= validation_show_error('notes'); ?></small></span>
           </div>
           <div class="form-row">
             <div class="col">
               <label for="start_date">Start Date/Time</label>
-              <input type="datetime-local" name="start_date" class="form-control" id="start_date" min="<?php echo date('Y-m-d');?>T00:00" required>
+              <input type="datetime-local" name="start_date" class="form-control" id="start_date" min="<?php echo date('Y-m-d');?>T00:00" >
+              <span class="text-danger"><small><?= validation_show_error('start_date'); ?></small></span>
             </div>
             <div class="col">
               <label for="end_date">End Date/Time</label>
-              <input type="datetime-local" name="end_date" class="form-control" id="end_date" min="<?php echo date('Y-m-d');?>T00:00" required>
+              <input type="datetime-local" name="end_date" class="form-control" id="end_date" min="<?php echo date('Y-m-d');?>T00:00" >
+              <span class="text-danger"><small><?= validation_show_error('end_date'); ?></small></span>
             </div>
           </div>
           <button type="submit" class="btn btn-primary mt-3">Add Appointment</button>
         </form>
 <form id="edit-form" action="<?=base_url('/Calendar/update')?>" method="post" hidden>
-        
       <?= csrf_field() ?>
       <div>
       </div>
@@ -71,39 +73,6 @@
         </div>
   </div>
 </div>
-    
-
-  <!-- <div class="table-responsive mt-3" style="height: 450px; overflow-y: scroll;">
-    <table class="table table-hover">
-      <thead class="thead-light">
-        <tr>
-          <th>#</th>
-          <th>Appointment</th>
-          <th>Description</th>
-          <th>Start Date</th>
-          <th>End Date</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="myTable">
-        <?php if (empty($todo)): ?>
-          <tr>
-            <td colspan="6" class="text-center"><samp>No Appointments Scheduled.</samp></td>
-          </tr>
-        <?php endif; ?>
-        <?php foreach ($todo as $todos) : ?>
-          <tr>
-            <td><?= $todos['id']; ?></td>
-            <td style="max-width: 200px;"><?= $todos['Appointment']; ?></td>
-            <td class="text-break"><?= $todos['appoint_desc']; ?></td>
-            <td><?= $todos['start_date']; ?></td>
-            <td><?= $todos['end_date']; ?></td>
-          </tr>
-          <tr class="table-spacing"></tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
-  </div> -->
 
 <div id="eventModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
