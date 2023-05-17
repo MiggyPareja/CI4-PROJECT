@@ -35,9 +35,9 @@
 <div class="bg-white py-2 mt-1 border-bottom">
   <div class="container d-flex align-items-center">
     <h5 class="p-3 mb-0 text-uppercase">Welcome back, User <?= $userData['username'] ?></h5>
-    <a class="btn btn-success mr-2 rounded-pill" href="<?= base_url('/Add'); ?>">Add</a>
-    <a class="btn btn-primary rounded-pill" href="#importModal" data-toggle="modal">Import</a>
-    <a class="btn btn-danger ml-2 rounded-pill" href="<?= base_url('/dashboard/clear'); ?>">Clear</a>
+    <a class="btn btn-success mr-2 " href="<?= base_url('/Add'); ?>">Add Products</a>
+    <a class="btn btn-primary " href="#importModal" data-toggle="modal">Import</a>
+    <a class="btn btn-danger ml-2 " href="<?= base_url('/dashboard/clear'); ?>">Clear</a>
     <form class="form-inline my-2 my-lg-0 ml-auto" action="<?= base_url('/dashboard/search') ?>" method="get">
       <input class="form-control mr-sm-2" type="text" placeholder="Search..." aria-label="Search" id="myInput" name="searchTable">
     </form>
@@ -59,9 +59,9 @@
     <?= $session->getFlashdata('error');?>
     </div>
 <?php endif; ?>
-<div class="container bg-white p-3">
+
+<div class="container p-3">
   <div class="d-flex justify-content-between">
-  
     <form class="mr-2" action="<?= current_url()?>" method="post" name="show_entries">
       <label for="show_entries" class="mr-2">Show 
         <select name="show_entries" id="show_entries">

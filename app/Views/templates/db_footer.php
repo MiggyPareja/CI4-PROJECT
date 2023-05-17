@@ -23,8 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initialView: 'dayGridMonth',
     events: '<?= base_url("/calendar/get") ?>',
     firstDay: 1,
-    minTime: '08:00:00',
-    maxTime: '17:00:00',
     navLinks:true,
     eventClick: function(info) {
       eventId = info.event.id;
@@ -47,8 +45,8 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#edit-eventId').val(eventId);
         $('#edit-appointment').val(eventTitle);
         $('#edit-notes').val(eventDescription);
-        $('#editStart_date').val(new Date(eventStart).toISOString().slice(0, -8));
-        $('#editEnd_date').val(new Date(eventEnd).toISOString().slice(0, -8));
+        $('#editStart_date').val(info.event.start.toLocaleString());
+        $('#editEnd_date').val(info.event.end.toLocaleString());
       });
       $('#delete-btn').on('click', function() {
         $.post('<?=base_url('/Calendar/delete')?>', {
@@ -59,11 +57,9 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         );
       });
-      $('#update-btn').on('click', function() {
-        $('#edit-form').hide();
-        $('#add-form').show();
-      });
     },
+
+
   });
 
   calendar.render();

@@ -4,32 +4,30 @@ namespace App\Controllers;
 
 use App\Models\CalendarModel;
 
-
 class Calendar extends BaseController
 {
     public $model;
     public $session;
-
     public function __construct()
     {
-        helper(['date','form']);
+        helper(['date','form','url']);
         $this->session = session();
         $this->model = new CalendarModel();
     }
 
     public function index()
     {
-    if(!$this->session->has('isLoggedIn'))
-    {
-        return redirect()->to('/login');
-    }
-    $data = [
-        'todo' =>$this->model->findAll(),
-        'id' =>$this->model->find('id')
-    ];
-    return view('templates/db_header') .
-        view('calendar',$data) .
-        view('templates/db_footer');
+        if(!$this->session->has('isLoggedIn'))
+        {
+            return redirect()->to('/login');
+        }
+        $data = [
+            'todo' =>$this->model->findAll(),
+            'id' =>$this->model->find('id')
+        ];
+        return view('templates/db_header') .
+            view('calendar',$data) .
+            view('templates/db_footer');
     }
 
     public function add()
@@ -39,11 +37,11 @@ class Calendar extends BaseController
         if($this->request->getMethod() == 'post'){
             $rules =[
                 'appointment' => 'required|min_length[3]|max_length[50]',
-                'notes' => 'required|min_length[3]',
-                'start_date' => 'valid_date[]',
-                'end_date' => 'valid_date[]',
+                'notes' => 'required|min_length[3]|max_length[100]',
+                'start_date' => 'required|valid_date[]',
+                'end_date' => 'required|valid_date[]',
             ];
-        }
+        
             if($this->validate($rules))
             {
                 $start_date = $this->request->getPost('start_date');
@@ -61,7 +59,9 @@ class Calendar extends BaseController
                 }
             }else{
                 $data['validation'] = $this->validator;
+                return redirect()->to(base_url('/Calendar'))->withInput();
             } 
+        }
             return view('templates/db_header') .
             view('calendar',$data) .
             view('templates/db_footer'); 

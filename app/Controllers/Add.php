@@ -22,7 +22,7 @@ class Add extends BaseController
         .view('add')
         .view('templates/db_footer');
     }
-    //<!-- prod_name','prod_file','prod_desc','prod_price','prod_create','prod_updated -->
+    
     public function store()
     {
         $data =[];
