@@ -10,7 +10,7 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js'></script>
     <script>setTimeout(function(){
     document.querySelector('.alert').remove();
-}, 2000);
+}, 3000);
 
 function startTime() {
   const today = new Date();
@@ -28,6 +28,7 @@ function checkTime(i) {
   return i;
 }</script>
 </head>
+
 <body onload="startTime()">
   <?php 
   $session = session();

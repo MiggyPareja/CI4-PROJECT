@@ -1,22 +1,22 @@
-<nav class="navbar navbar-expand-lg navbar-light border-bottom border-secondary">
-    <a class="navbar-brand" href="#">Product Handler</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-dark border-bottom border-secondary">
+    <a class="navbar-brand text-white" href="#">Product Handler</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse " id="navbarNav">
+    <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="<?=base_url()?>register">Register</a>
+                <a class="nav-link text-white" href="<?=base_url()?>register">Register</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?=base_url()?>login">Login</a>
+                <a class="nav-link text-white" href="<?=base_url()?>login">Login</a>
             </li>
         </ul>
     </div>
 </nav>
 
 <div class="jumbotron jumbotron-fluid bg-light border-bottom border-dark">
-    <div class="container" >
+    <div class="container">
         <h1 class="display-4">Manage your products with ease</h1>
         <p class="lead">Product Handler is a reliable and efficient platform that enables businesses of all sizes to manage their products with ease. Our user-friendly interface allows you to effortlessly organize, categorize, and track your inventory in real-time, ensuring that you always have accurate and up-to-date information at your fingertips.</p>
         <a href="<?=base_url()?>login" class="btn btn-primary btn-lg">Get started now</a>
@@ -26,26 +26,26 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <div class="card mb-4">
+            <div class="card mb-4 bg-success">
                 <div class="card-body">
-                    <h5 class="card-title">Easy to use</h5>
-                    <p class="card-text">Product Handler has a simple and intuitive interface that makes it easy for anyone to manage their products.</p>
+                    <h5 class="card-title text-white">Easy to use</h5>
+                    <p class="card-text text-white">Product Handler has a simple and intuitive interface that makes it easy for anyone to manage their products.</p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card mb-4">
+            <div class="card mb-4 bg-info">
                 <div class="card-body">
-                    <h5 class="card-title">Real-time tracking</h5>
-                    <p class="card-text">With Product Handler, you can track your inventory in real-time, so you always know exactly what you have in stock.</p>
+                    <h5 class="card-title text-white">Real-time tracking</h5>
+                    <p class="card-text text-white">With Product Handler, you can track your inventory in real-time, so you always know exactly what you have in stock.</p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card mb-4">
+            <div class="card mb-4 bg-warning">
                 <div class="card-body">
-                    <h5 class="card-title">Customizable</h5>
-                    <p class="card-text">Product Handler allows you to customize your inventory categories to suit your specific business needs.</p>
+                    <h5 class="card-title text-white">Customizable</h5>
+                    <p class="card-text text-white">Product Handler allows you to customize your inventory categories to suit your specific business needs.</p>
                 </div>
             </div>
         </div>
@@ -53,68 +53,66 @@
 </div>
 
 <section class="bg-light border-top border-dark">
-  <div class="container">
-    <h2 class="text-center mb-4 mt-4">What our customers are saying</h2>
-    <div class="row">
-      <div class="col-md-4 mb-4">
-        <div class="card p-4">
-          <p class="lead">"Product Handler has completely transformed the way we manage our inventory. It's so easy to use and has saved us so much time and effort."</p>
-          <div class="text-right">
-            <p class="font-weight-bold mb-0">John Smith</p>
-            <small>Owner, MeowMeow Corporation</small>
-          </div>
+    <div class="container">
+        <h2 class="text-center mb-4 mt-4">What our customers are saying</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card p-4 bg-secondary text-white">
+                    <p class="lead">"Product Handler has completely transformed the way we manage our inventory. It's so easy to use and has saved us so much time and effort."</p>
+                    <div class="text-right">
+                        <p class="font-weight-bold mb-0">John Smith</p>
+                        <small>Owner, MeowMeow Corporation</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card p-4 bg-primary text-white">
+                    <p class="lead">"I love how customizable Product Handler is. It allows us to organize our inventory in a way that makes sense for our business."</p>
+                    <div class="text-right">
+                        <p class="font-weight-bold mb-0">Jane Doe</p>
+                        <small>Manager, Meowers Company</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card p-4 bg-info text-white">
+                    <p class="lead">"Real-time tracking is a game-changer. We always know exactly what we have in stock, which has helped us avoid costly mistakes."</p>
+                    <div class="text-right">
+                        <p class="font-weight-bold mb-0">Mike Johnson</p>
+                        <small>CEO, Meow2 Industries</small>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="card p-4">
-          <p class="lead">"I love how customizable Product Handler is. It allows us to organize our inventory in a way that makes sense for our business."</p>
-          <div class="text-right">
-            <p class="font-weight-bold mb-0">Jane Doe</p>
-            <small>Manager, Meowers Company</small>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="card p-4">
-          <p class="lead">"Real-time tracking is a game-changer. We always know exactly what we have in stock, which has helped us avoid costly mistakes."</p>
-          <div class="text-right">
-            <p class="font-weight-bold mb-0">Mike Johnson</p>
-            <small>CEO, Meow2 Industries</small>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 </section>
 
 <footer class="bg-light border-top border-secondary mt-5">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <h5>About Us</h5>
-        <p>Product Handler is a reliable and efficient platform that enables businesses of all sizes to manage their products with ease.</p>
-      </div>
-      <div class="col-md-3">
-        <h5>Quick Links</h5>
-        <ul class="list-unstyled">
-          <li><a href="<?=base_url()?>register">Register</a></li>
-          <li><a href="<?=base_url()?>login">Login</a></li>
-        </ul>
-      </div>
-      <div class="col-md-3">
-        <h5>Contact Us</h5>
-        <ul class="list-unstyled">
-          <li><i class="fas fa-envelope"></i> info@producthandler.com</li>
-          <li><i class="fas fa-phone"></i> +1 (123) 456-7890</li>
-        </ul>
-      </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>About Us</h5>
+                <p>Product Handler is a reliable and efficient platform that enables businesses of all sizes to manage their products with ease.</p>
+            </div>
+            <div class="col-md-3">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="<?=base_url()?>register">Register</a></li>
+                    <li><a href="<?=base_url()?>login">Login</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h5>Contact Us</h5>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-envelope"></i> info@producthandler.com</li>
+                    <li><i class="fas fa-phone"></i> +1 (123) 456-7890</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="text-center">&copy; 2023 Product Handler</p>
+            </div>
+        </div>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-        <p class="text-center">&copy; 2023 Product Handler</p>
-      </div>
-    </div>
-  </div>
-</footer> 
-
-
+</footer>

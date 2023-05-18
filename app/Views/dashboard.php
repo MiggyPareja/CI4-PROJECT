@@ -16,6 +16,7 @@
           <div class="form-group">
             <label for="importFile"><h4>Choose File: </h4></label>
             <input type="file" class="form-control-file" id="importFile" name="importFile">
+            <small><i>Max # of data : 2000</i></small>
           </div>
           <div class="form-group-sm" hidden>
             <label for="user">User:</label>
@@ -38,9 +39,7 @@
     <a class="btn btn-success mr-2 " href="<?= base_url('/Add'); ?>">Add Products</a>
     <a class="btn btn-primary " href="#importModal" data-toggle="modal">Import</a>
     <a class="btn btn-danger ml-2 " href="<?= base_url('/dashboard/clear'); ?>">Clear</a>
-    <form class="form-inline my-2 my-lg-0 ml-auto" action="<?= base_url('/dashboard/search') ?>" method="get">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search..." aria-label="Search" id="myInput" name="searchTable">
-    </form>
+    
   </div>
 </div>
 
@@ -74,7 +73,10 @@
       </label>
       <button class="btn btn-secondary btn-sm" type="submit">Filter</button>
     </form>
-    <?= $pager->links() ?>
+    <form class="form-inline my-2 my-lg-0 ml-auto" action="<?= base_url('/dashboard/search') ?>" method="get">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search..." aria-label="Search" id="myInput" name="searchTable">
+    </form>
+    
   </div>
   
   <div class="table-responsive mt-3" style="height: 450px; overflow-y: scroll;">
@@ -113,6 +115,7 @@
         <?php endforeach; ?>
       </tbody>
     </table>
+    <?= $pager->links() ?>
   </div>
 </div>
 

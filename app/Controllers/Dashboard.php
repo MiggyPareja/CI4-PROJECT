@@ -15,6 +15,10 @@ public function __construct()
         $this->model = new DashboardModel();
         
     }
+public function __destruct(){
+    
+}
+
 public function index()
     {
         $perPage = $this->request->getPost('show_entries');
@@ -129,69 +133,87 @@ public function download($filename)
 
          return $this->response->download($path,null);
     }
-public function import()
-{
-    $userData = $this->session->get('id');
-    $file = $this->request->getFile('importFile');
-
-    if (!$file || !$file->isValid()) {
-        session()->setFlashdata('error', 'Invalid file uploaded.');
-        return redirect()->back();
-    }
-    if ($file->getExtension() !== 'csv') {
-        session()->setFlashdata('error', 'Invalid file type. Only CSV files are allowed.');
-        return redirect()->back();
-    }
-
-    $handle = fopen($file->getTempName(), 'r');
-
-    fgetcsv($handle);
-    while (($data = fgetcsv($handle)) !== false) {
-        list($name, $image, $description, $price) = $data;
-        $imageFileName = null;
-
-        if (filter_var($image, FILTER_VALIDATE_URL)) {
-            $imageFile = file_get_contents($image);
-
-            if ($imageFile !== false) {
-                $imageFileExtension = pathinfo(parse_url($image, PHP_URL_PATH), PATHINFO_EXTENSION);
-                $imageFileName ='data-'. random_string('alnum', 8) . '.' . $imageFileExtension;
-                write_file(WRITEPATH . 'uploads/' . $imageFileName, $imageFile);
-            }
-        } elseif (is_file($image)) {
-            $imageFileExtension = pathinfo($image, PATHINFO_EXTENSION);
-            $imageFileName = 'data-'. random_string('alnum', 8) . '.' . $imageFileExtension;
-            copy($image, WRITEPATH . 'uploads/' . $imageFileName);
-        }
-
-        $productData = [
-            'prod_name' => $name,
-            'prod_file' => $imageFileName,
-            'prod_desc' => $description,
-            'prod_price' => (float)$price,
-            'user' => $userData
-        ];
-
-        $validation =  \Config\Services::validation();
-        $validation->setRules([
-        'prod_name' => 'required|min_length[3]|max_length[35]',
-        'prod_desc' => 'required|min_length[3]|max_length[100]',
-        'prod_price' => 'required|numeric'
-        ]);
-        
-        if (!$validation->run($productData)) {
-            session()->setFlashdata('error', $validation->listErrors());
-            fclose($handle);
+    public function import()
+    {
+        $userData = $this->session->get('id');
+        $file = $this->request->getFile('importFile');
+    
+        if (!$file || !$file->isValid()) {
+            session()->setFlashdata('error', 'Invalid file uploaded.');
             return redirect()->back();
         }
-
-        $this->model->insert($productData);
+        if ($file->getExtension() !== 'csv') {
+            session()->setFlashdata('error', 'Invalid file type. Only CSV files are allowed.');
+            return redirect()->back();
+        }
+        $handle = fopen($file->getTempName(), 'r');
+    
+        fgetcsv($handle);
+    
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'prod_name' => 'required|min_length[3]|max_length[35]',
+            'prod_desc' => 'required|min_length[3]|max_length[100]',
+            'prod_price' => 'required|numeric'
+        ]);
+        $db = \Config\Database::connect();
+        $db->transStart();
+        $products = [];
+    
+        while (($data = fgetcsv($handle)) !== false) {
+            list($name, $image, $description, $price) = $data;
+            $imageFileName = null;
+    
+            if (filter_var($image, FILTER_VALIDATE_URL)) {
+                $imageFile = file_get_contents($image);
+    
+                if ($imageFile !== false) {
+                    $imageFileExtension = pathinfo(parse_url($image, PHP_URL_PATH), PATHINFO_EXTENSION);
+                    $imageFileName = random_string('alnum', 8) . '.' . $imageFileExtension;
+                    write_file(WRITEPATH . 'uploads/' . $imageFileName, $imageFile);
+                }
+            } elseif (is_file($image)) {
+                $imageFileExtension = pathinfo($image, PATHINFO_EXTENSION);
+                $imageFileName = random_string('alnum', 8) . '.' . $imageFileExtension;
+                copy($image, WRITEPATH . 'uploads/' . $imageFileName);
+            }
+    
+            $productData = [
+                'prod_name' => $name,
+                'prod_file' => $imageFileName,
+                'prod_desc' => $description,
+                'prod_price' => (float) $price,
+                'user' => $userData
+            ];
+    
+            if (!$validation->run($productData)) {
+                session()->setFlashdata('error', $validation->listErrors());
+                fclose($handle);
+                $db->transComplete(); 
+                return redirect()->back();
+            }
+    
+            $products[] = $productData;
+    
+            
+            if (count($products) >= 2000) {
+                $this->model->insertBatch($products);
+                $products = [];
+            }
+        }
+    
+        if (!empty($products)) {
+            $this->model->insertBatch($products);
+        }
+    
+        session()->setFlashdata('success', 'Data imported successfully.');
+        fclose($handle);
+        
+        $db->transComplete(); 
+    
+        return redirect()->back();
     }
-
-    session()->setFlashdata('success', 'Data imported successfully.');
-    fclose($handle);
-    return redirect()->back();
-}
+    
 
     
 public function clear()
