@@ -15,8 +15,13 @@ $session = session();
       <?php endif; ?>
 
       <?php if ($session->getFlashdata('Calendar')) : ?>
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
           <?= $session->getFlashdata('Calendar'); ?>
+        </div>
+      <?php endif; ?>
+      <?php if ($session->getFlashdata('delete')) : ?>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <?= $session->getFlashdata('delete'); ?>
         </div>
       <?php endif; ?>
 
@@ -49,7 +54,7 @@ $session = session();
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary mt-3">Add Appointment</button>
+        <button type="submit" class="btn btn-primary mt-3"><i class="bi bi-calendar-plus"></i> Add Appointment</button>
       </form>
 
       <form id="edit-form" action="<?= base_url('/Calendar/update') ?>" method="post" hidden>
@@ -59,26 +64,26 @@ $session = session();
 
         <div class="form-group">
           <label for="edit-appointment">Appointment Name</label>
-          <input type="text" name="edit-appointment" class="form-control" id="edit-appointment" value="<?= old('edit-appointment') ?>" required>
+          <input type="text" name="edit-appointment" class="form-control" id="edit-appointment" value="<?= set_value('edit-appointment') ?>" required>
         </div>
 
         <div class="form-group">
           <label for="edit-notes">Notes</label>
-          <textarea name="edit-notes" id="edit-notes" class="form-control overflow-auto" style="height: 75px; resize: none;" value="<?= old('edit-notes') ?>"></textarea>
+          <textarea name="edit-notes" id="edit-notes" class="form-control overflow-auto" style="height: 75px; resize: none;" value="<?= set_value('edit-notes') ?>"></textarea>
         </div>
 
         <div class="form-row">
           <div class="col">
             <label for="editStart_date">Start Date/Time</label>
-            <input type="datetime-local" name="editStart_date" class="form-control" id="editStart_date" min="<?php echo date('Y-m-d'); ?>T00:00" value="<?= old('editStart_date') ?>" required>
+            <input type="datetime-local" name="editStart_date" class="form-control" id="editStart_date" min="<?php echo date('Y-m-d'); ?>T00:00"  required>
           </div>
           <div class="col">
             <label for="editEnd_date">End Date/Time</label>
-            <input type="datetime-local" name="editEnd_date" class="form-control" id="editEnd_date" min="<?php echo date('Y-m-d'); ?>T00:00" value="<?= old('editEnd_date') ?>" required>
+            <input type="datetime-local" name="editEnd_date" class="form-control" id="editEnd_date" min="<?php echo date('Y-m-d'); ?>T00:00"  required>
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary mt-3" id="update-btn">Update Appointment</button>
+        <button type="submit" class="btn btn-primary mt-3" id="update-btn"> <i class="bi bi-calendar-check"></i> Update</button>
         <button class="btn btn-secondary mt-3" type="button" id="back-btn"><a class="text-decoration-none text-white" href="<?= base_url('/calendar') ?>">Back</a></button>
       </form>
     </div>

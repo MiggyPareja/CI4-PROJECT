@@ -1,6 +1,6 @@
 <?php $page_session = \Config\Services::session();?>
 
-<div class="container py-5">
+<div class="container py-2">
   <div class="row justify-content-center align-items-center">
     <div class="col col-sm-8 col-md-6 col-lg-4 col-xl-4 bg-light border rounded shadow">
       <h1 class="text-center mb-4">Register</h1>

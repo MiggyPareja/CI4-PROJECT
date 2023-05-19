@@ -36,14 +36,23 @@
 <div class="bg-white py-2 mt-1 border-bottom">
   <div class="container d-flex align-items-center">
     <h5 class="p-3 mb-0 text-uppercase">Welcome back, User <?= $userData['username'] ?></h5>
-    <a class="btn btn-success mr-2 " href="<?= base_url('/Add'); ?>">Add Products</a>
-    <a class="btn btn-primary " href="#importModal" data-toggle="modal">Import</a>
-    <a class="btn btn-danger ml-2 " href="<?= base_url('/dashboard/clear'); ?>">Clear</a>
+    <a class="btn btn-success mr-2 " href="<?= base_url('/Add'); ?>"><i class="bi bi-plus-lg"></i> Add Products</a>
+    <a class="btn btn-primary " href="#importModal" data-toggle="modal"><i class="bi bi-download"></i> Import</a>
+    <a class="btn btn-danger ml-2 " href="<?= base_url('/dashboard/clear'); ?>"><i class="bi bi-trash"></i> Clear</a>
     
   </div>
 </div>
 
-<?php if ($session->getFlashdata('search')) : ?>
+
+
+<div class="container p-3 ">
+  <div class="d-flex justify-content-between">
+    <form class="form-inline my-2 my-lg-0 ml-auto" action="<?= base_url('/dashboard/search') ?>" method="get">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search..." aria-label="Search" id="myInput" name="searchTable">
+    </form>
+    
+  </div>
+  <?php if ($session->getFlashdata('search')) : ?>
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
     <?= $session->getFlashdata('search');?>
     </div>
@@ -58,28 +67,7 @@
     <?= $session->getFlashdata('error');?>
     </div>
 <?php endif; ?>
-
-<div class="container p-3">
-  <div class="d-flex justify-content-between">
-    <form class="mr-2" action="<?= current_url()?>" method="post" name="show_entries">
-      <label for="show_entries" class="mr-2">Show 
-        <select name="show_entries" id="show_entries">
-          <option value="10" >10</option>
-          <option value="20" >20</option>
-          <option value="50" >50</option>
-          <option value="100">100</option>
-        </select>
-        Entries
-      </label>
-      <button class="btn btn-secondary btn-sm" type="submit">Filter</button>
-    </form>
-    <form class="form-inline my-2 my-lg-0 ml-auto" action="<?= base_url('/dashboard/search') ?>" method="get">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search..." aria-label="Search" id="myInput" name="searchTable">
-    </form>
-    
-  </div>
-  
-  <div class="table-responsive mt-3" style="height: 450px; overflow-y: scroll;">
+  <div class="table-responsive mt-3 overflow-auto" style="height: 450px; ">
     <table class="table table-hover">
       <thead class="thead-light">
         <tr>

@@ -10,7 +10,7 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js'></script>
     <script>setTimeout(function(){
     document.querySelector('.alert').remove();
-}, 3000);
+}, 2000);
 
 function startTime() {
   const today = new Date();
@@ -44,10 +44,10 @@ function checkTime(i) {
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
     <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a href="<?= base_url('/Calendar')?>" class="nav-link" >To-Do <span class="sr-only">(current)</span></a>
+          <a href="<?= base_url('/Calendar')?>" class="nav-link" ><i class="bi bi-calendar"></i> Calendar <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-          <a href="<?= base_url('/Dashboard')?>" class="nav-link" >Products <span class="sr-only">(current)</span></a>
+          <a href="<?= base_url('/Dashboard')?>" class="nav-link" ><i class="bi bi-cart4"></i> Products <span class="sr-only">(current)</span></a>
         </li>
     </ul>
   </div>

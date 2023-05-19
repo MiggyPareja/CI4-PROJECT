@@ -9,14 +9,15 @@ class Calendar extends BaseController
     private $model;
     private $session;
     
-    public function __construct()
+public function __construct()
     {
+        
         helper(['date','form','url']);
         $this->session = session();
         $this->model = new CalendarModel();
+        
     }
-
-    public function index()
+public function index()
     {
         if (!$this->session->has('isLoggedIn')) {
             return redirect()->to('/login');
@@ -32,7 +33,7 @@ class Calendar extends BaseController
             view('templates/db_footer');
     }
 
-    public function add()
+public function add()
     { 
         $data = [];
         $data['validation'] = null;
@@ -70,7 +71,7 @@ class Calendar extends BaseController
             view('templates/db_footer'); 
     }
 
-    public function get()
+public function get()
     {
         $getAll = $this->model->findAll();
         $data = [];
@@ -88,20 +89,21 @@ class Calendar extends BaseController
         return $this->response->setJSON($data);
     }
 
-    public function delete()
+public function delete()
     {
         $id = $this->request->getPost('id');
 
-        if ($this->model->where('id', $id)->delete()) {
-            $this->session->setFlashdata('Calendar', 'Successfully deleted');
-            return redirect()->to(base_url('/calendar'));
+        if ($this->model->where('id', $id)->delete()) 
+        {
+            $this->session->setFlashdata('delete', 'Successfully deleted');
+           
         } else {
-            $this->session->setFlashdata('Calendar', 'Delete Error');
-            return redirect()->to(base_url('/calendar'))->withInput();
+            $this->session->setFlashdata('delete', 'Delete Error');
         }
+        return redirect()->to('/calendar')->withInput();
     }
     
-    public function update()
+public function update()
     {
         $id = $this->request->getPost('edit-eventId');
 

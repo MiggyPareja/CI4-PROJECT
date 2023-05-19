@@ -10,6 +10,7 @@ class Dashboard extends BaseController{
     public $validation;
 public function __construct()
     {
+        $this->validation = \Config\Services::validation();
         helper(['form','filesystem','url','security','text']);
         $this->session = session();
         $this->model = new DashboardModel();
@@ -21,15 +22,13 @@ public function __destruct(){
 
 public function index()
     {
-        $perPage = $this->request->getPost('show_entries');
         $getUserId = $this->session->get('id');
         if(!(session()->has('isLoggedIn')))
         {
             return redirect()->to(base_url('/login'));
         }
-        
         $data = [
-            'products' => $this->model->where(['user' => $getUserId])->paginate($perPage),
+            'products' => $this->model->where(['user' => $getUserId])->paginate(20),
             'pager' => $this->model->pager,
         ];
         return view('templates/db_header')
@@ -133,7 +132,7 @@ public function download($filename)
 
          return $this->response->download($path,null);
     }
-    public function import()
+public function import()
     {
         $userData = $this->session->get('id');
         $file = $this->request->getFile('importFile');
@@ -150,14 +149,14 @@ public function download($filename)
     
         fgetcsv($handle);
     
-        $validation = \Config\Services::validation();
-        $validation->setRules([
+        
+        $this->validation->setRules([
             'prod_name' => 'required|min_length[3]|max_length[35]',
             'prod_desc' => 'required|min_length[3]|max_length[100]',
             'prod_price' => 'required|numeric'
         ]);
-        $db = \Config\Database::connect();
-        $db->transStart();
+        
+        $this->model->transStart();
         $products = [];
     
         while (($data = fgetcsv($handle)) !== false) {
@@ -186,10 +185,10 @@ public function download($filename)
                 'user' => $userData
             ];
     
-            if (!$validation->run($productData)) {
-                session()->setFlashdata('error', $validation->listErrors());
+            if (!$this->validation->run($productData)) {
+                session()->setFlashdata('error', $this->validation->listErrors());
                 fclose($handle);
-                $db->transComplete(); 
+                $this->model->transComplete(); 
                 return redirect()->back();
             }
     
@@ -209,7 +208,7 @@ public function download($filename)
         session()->setFlashdata('success', 'Data imported successfully.');
         fclose($handle);
         
-        $db->transComplete(); 
+        $this->model->transComplete(); 
     
         return redirect()->back();
     }

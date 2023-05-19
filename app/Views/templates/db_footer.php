@@ -5,6 +5,8 @@
     <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
 
 
 <script>
@@ -45,8 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#edit-eventId').val(eventId);
         $('#edit-appointment').val(eventTitle);
         $('#edit-notes').val(eventDescription);
-        $('#editStart_date').val(info.event.start.toLocaleString());
-        $('#editEnd_date').val(info.event.end.toLocaleString());
+        $('#editStart_date').val(moment(info.event.start).format('YYYY-MM-DDTHH:mm'));
+        $('#editEnd_date').val(moment(info.event.end).format('YYYY-MM-DDTHH:mm'));
       });
       $('#delete-btn').on('click', function() {
         $.post('<?=base_url('/Calendar/delete')?>', {
@@ -58,8 +60,6 @@ document.addEventListener('DOMContentLoaded', function() {
         );
       });
     },
-
-
   });
 
   calendar.render();
