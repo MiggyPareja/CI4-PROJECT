@@ -27,6 +27,7 @@ public function index()
         {
             return redirect()->to(base_url('/login'));
         }
+         
         $data = [
             'products' => $this->model->where(['user' => $getUserId])->paginate(20),
             'pager' => $this->model->pager,
